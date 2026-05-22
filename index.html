@@ -218,8 +218,8 @@
     <h1 class="hero-name">Chetan Dahal</h1>
     <p class="hero-sub">MS Electrical Engineering · UNLV Graduate Research Assistant</p>
     <p class="hero-desc">
-      I build autonomous robots that work in the real world — UAVs, mobile robots, and
-      embedded AI systems. Below is a detailed look at the projects I've designed, built, and shipped.
+      I build autonomous robots that work in the real world including UAVs, mobile robots and
+      embedded AI systems. Below is a detailed look at the projects I've designed and built.
     </p>
     <div class="hero-links">
       <a href="#projects" class="pill pill-solid">Explore Projects ↓</a>
@@ -233,7 +233,7 @@
 <div class="projects-wrapper" id="projects">
   <div class="projects-header">
     <h2>Project <span>Case Studies</span></h2>
-    <p>Click any project to read the full breakdown — problem, approach, results, and system architecture.</p>
+    <p>Click any project to read the full breakdown: problem, approach, results and system architecture.</p>
   </div>
 
   <div class="filter-bar">
@@ -270,8 +270,8 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>Most mobile robots plan paths as if humans are static obstacles. In real shared spaces — warehouses, hospitals, labs — humans move unpredictably. A robot that ignores human motion will either stop constantly or create unsafe close-passes that erode trust.</p>
-            <p>The goal: build a planner that treats human motion as a first-class input, generating trajectories that are not just collision-free but socially comfortable — maintaining appropriate distances without sacrificing robot efficiency.</p>
+            <p>Most mobile robots plan paths as if humans are static obstacles. In real shared spaces such as warehouses, hospitals, labs, humans move unpredictably. A robot that ignores human motion will either stop constantly or create unsafe close-passes that erode trust.</p>
+            <p>The goal: build a planner that treats human motion as a first-class input, generating trajectories that are not just collision-free but socially comfortable while maintaining appropriate distances without sacrificing robot efficiency.</p>
           </div>
         </div>
         <div class="cs-col">
@@ -329,16 +329,16 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>In nuclear facilities or post-disaster environments, humans cannot safely enter radiation-contaminated spaces. A UAV could map these environments, but GPS is unavailable indoors and radiation sensors must be fused with spatial data to produce a meaningful map — not just point readings.</p>
-            <p>The hard parts: making the UAV localize itself without GPS, avoiding obstacles in cluttered indoor spaces, and overlaying sensor data on a 2D grid map in real time.</p>
+            <p>In nuclear facilities or post-disaster environments, humans cannot safely enter radiation-contaminated spaces. A UAV could map these environments, but GPS is unavailable indoors and radiation sensors must be fused with spatial data to produce a meaningful map, not just point readings.</p>
+            <p>The hard parts: making the UAV localize itself without GPS, avoiding obstacles in cluttered indoor spaces and overlaying sensor data on a 2D grid map in real time.</p>
           </div>
         </div>
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
             <p>I built the full simulation stack from scratch: PX4 SITL for flight control, interfaced with ROS, running inside a custom Gazebo world representing a cluttered indoor environment.</p>
-            <p>Hector SLAM provides pose estimation and map building using only a 2D LiDAR — no GPS required. A map-driven obstacle avoidance layer guides the UAV through the space. Radiation readings are projected onto the occupancy grid and visualized as a heatmap in RViz, giving operators a live picture of contamination distribution.</p>
-            <p>Key sim-to-real challenges I addressed: TF frame consistency across the full stack, sensor noise modeling, and coordinate frame alignment between PX4's NED frame and ROS's ENU convention.</p>
+            <p>Hector SLAM provides pose estimation and map building using only a 2D LiDAR with no GPS required. A map-driven obstacle avoidance layer guides the UAV through the space. Radiation readings are projected onto the occupancy grid and visualized as a heatmap in RViz, giving operators a live picture of contamination distribution.</p>
+            <p>Key sim-to-real challenges I addressed: TF frame consistency across the full stack, sensor noise modeling and coordinate frame alignment between PX4's NED frame and ROS's ENU convention.</p>
           </div>
         </div>
       </div>
@@ -393,15 +393,15 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>Running 3D LiDAR-inertial SLAM fully onboard a UAV — without offloading to a ground station — is computationally demanding. The challenge was integrating a tightly-coupled SLAM algorithm (FAST-LIO) with limited onboard compute, on a custom-built quadrotor with real vibration and sensor noise.</p>
-            <p>Additionally, the UAV itself had to be assembled and tuned to fly stably enough that SLAM could produce clean maps — hardware and software are tightly coupled here.</p>
+            <p>Running 3D LiDAR-inertial SLAM fully onboard a UAV, without offloading to a ground station, is computationally demanding. The challenge was integrating a tightly-coupled SLAM algorithm (FAST-LIO) with limited onboard compute, on a custom-built quadrotor with real vibration and sensor noise.</p>
+            <p>Additionally, the UAV itself had to be assembled and tuned to fly stably enough that SLAM could produce clean maps. Hardware and software are tightly coupled here.</p>
           </div>
         </div>
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
             <p>I assembled the quadrotor from scratch using commercial frames and electronic components, then tuned the flight controller for stable hover. An NVIDIA Jetson Orin Nano was selected as the onboard computer for its GPU-accelerated compute in a power-efficient package.</p>
-            <p>FAST-LIO — a tightly-coupled LiDAR-inertial odometry algorithm — was integrated and configured for real-time operation on the Jetson. It fuses LiDAR point clouds with IMU data to estimate pose at high frequency, producing a dense 3D map of the environment as the UAV flies. This work directly supports the wildfire fuel moisture estimation research at UNLV's lab.</p>
+            <p>FAST-LIO, a tightly-coupled LiDAR-inertial odometry algorithm, was integrated and configured for real-time operation on the Jetson. It fuses LiDAR point clouds with IMU data to estimate pose at high frequency, producing a dense 3D map of the environment as the UAV flies. This work directly supports the wildfire fuel moisture estimation research at UNLV's lab.</p>
           </div>
         </div>
       </div>
@@ -453,7 +453,7 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>Hyperspectral cameras capture hundreds of spectral bands per pixel, creating 3D input tensors that are far richer — and far harder to process — than standard RGB images. The task: predict NDVI (Normalized Difference Vegetation Index), a 2D continuous map of vegetation health, from these high-dimensional inputs.</p>
+            <p>Hyperspectral cameras capture hundreds of spectral bands per pixel, creating 3D input tensors that are far richer and far harder to process than standard RGB images. The task: predict NDVI (Normalized Difference Vegetation Index), a 2D continuous map of vegetation health, from these high-dimensional inputs.</p>
             <p>Standard 2D CNNs discard spectral structure. Standard 3D CNNs are too expensive. The model needed to capture both spectral depth and spatial context efficiently.</p>
           </div>
         </div>
@@ -461,7 +461,7 @@
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
             <p>I implemented a <strong style="color:var(--text)">Hybrid 3D-2D U-Net</strong>: the encoder uses 3D convolutions to extract spectral-spatial features from the hyperspectral patch, which are then decoded through 2D layers to produce the continuous NDVI output map. This achieved RMSE 0.0443 and R² 0.86.</p>
-            <p>To push further, I integrated <strong style="color:var(--text)">Transformer encoders into the CNN bottleneck</strong>, combining local feature extraction with global context modelling across the spatial dimensions. This hybrid architecture achieved RMSE 0.0208 and R² 0.9692 — a significant jump. Training used global min-max normalization, data augmentation, and validation-based checkpointing throughout.</p>
+            <p>To push further, I integrated <strong style="color:var(--text)">Transformer encoders into the CNN bottleneck</strong>, combining local feature extraction with global context modelling across the spatial dimensions. This hybrid architecture achieved RMSE 0.0208 and R² 0.9692, a significant jump. Training used global min-max normalization, data augmentation and validation-based checkpointing throughout.</p>
           </div>
         </div>
       </div>
@@ -512,7 +512,7 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>For a robot to safely navigate around people, it needs more than "there's a person at pixel (x, y)." It needs stable 3D position estimates — across multiple people, accounting for sensor noise, occlusions, and the fact that people come and go from the scene.</p>
+            <p>For a robot to safely navigate around people, it needs more than "there's a person at pixel (x, y)." It needs stable 3D position estimates across multiple people, accounting for sensor noise, occlusions and the fact that people come and go from the scene.</p>
             <p>Naive detection-only approaches flicker and lose track identity, making them unreliable for safety-critical use. The challenge was building a tracker that stays stable across time, even under noisy depth readings and partial occlusions.</p>
           </div>
         </div>
@@ -520,7 +520,7 @@
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
             <p>YOLOv8 detects people in the RGB image. For each detection, the corresponding depth value is used to back-project the 2D bounding box center into a 3D position in the robot's coordinate frame.</p>
-            <p>A <strong style="color:var(--text)">multi-target Kalman filter</strong> maintains a smoothed estimate of each person's 3D position and velocity over time. The hardest part is the data association problem: when there are multiple detections and multiple tracks, which detection belongs to which track? I applied the <strong style="color:var(--text)">Jonker–Volgenant algorithm</strong> — an efficient implementation of optimal assignment — to solve this robustly at each timestep, enabling stable identities even in crowded scenes.</p>
+            <p>A <strong style="color:var(--text)">multi-target Kalman filter</strong> maintains a smoothed estimate of each person's 3D position and velocity over time. The hardest part is the data association problem: when there are multiple detections and multiple tracks, which detection belongs to which track? I applied the <strong style="color:var(--text)">Jonker–Volgenant algorithm</strong>, an efficient implementation of optimal assignment, to solve this robustly at each timestep, enabling stable identities even in crowded scenes.</p>
           </div>
         </div>
       </div>
@@ -555,7 +555,7 @@
           <span class="cs-cat-badge cat-embedded">Embedded / Edge</span>
         </div>
         <div class="cs-title">Embedded ML for Hand-Tool Ergonomics Monitoring</div>
-        <div class="cs-tagline">A TinyML classifier running on an STM32 microcontroller that detects unsafe wrist posture during hand-tool use in real time — 94% accuracy on the MCU.</div>
+        <div class="cs-tagline">A TinyML classifier running on an STM32 microcontroller that detects unsafe wrist posture during hand-tool use in real time with 94% accuracy on the MCU.</div>
       </div>
       <div class="cs-header-right">
         <div class="cs-date">Nov 2025</div>
@@ -571,15 +571,15 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>Repetitive awkward wrist postures during hand-tool use are a leading cause of musculoskeletal disorders in manufacturing workers. Existing solutions require expensive motion-capture setups or clinician observation — neither is scalable to a factory floor.</p>
-            <p>The goal: build a wearable, real-time ergonomic monitor that runs entirely on a cheap microcontroller — no cloud, no latency, no battery-draining wireless streaming.</p>
+            <p>Repetitive awkward wrist postures during hand-tool use are a leading cause of musculoskeletal disorders in manufacturing workers. Existing solutions require expensive motion-capture setups or clinician observation, neither of which is scalable to a factory floor.</p>
+            <p>The goal: build a wearable, real-time ergonomic monitor that runs entirely on a cheap microcontroller with no cloud, no latency, no battery-draining wireless streaming.</p>
           </div>
         </div>
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
             <p>I designed and built an STM32 + MEMS IMU prototype using MEMS Studio to capture wrist and forearm motion during simulated hand-tool tasks. The IMU records acceleration and angular velocity at the wrist.</p>
-            <p>A TinyML model was trained to classify motion windows as safe vs. unsafe posture, then quantized and deployed directly onto the STM32 microcontroller. The result: real-time on-device inference with no host computer required, at approximately 94% classification accuracy — a proof-of-concept that compact AI can work for workplace safety monitoring.</p>
+            <p>A TinyML model was trained to classify motion windows as safe vs. unsafe posture, then quantized and deployed directly onto the STM32 microcontroller. The result: real-time on-device inference with no host computer required, at approximately 94% classification accuracy, a proof-of-concept that compact AI can work for workplace safety monitoring.</p>
           </div>
         </div>
       </div>
@@ -630,7 +630,7 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>Physical models for gas turbine NOx emissions are complex, computationally expensive, and require detailed thermodynamic parameters. A data-driven approach could predict emissions directly from the sensor streams already present in any modern turbine — making real-time monitoring practical.</p>
+            <p>Physical models for gas turbine NOx emissions are complex, computationally expensive, and require detailed thermodynamic parameters. A data-driven approach could predict emissions directly from the sensor streams already present in any modern turbine, making real-time monitoring practical.</p>
             <p>The challenge: the relationship between operating conditions and NOx is highly nonlinear, and the model must generalize well, not just fit the training set.</p>
           </div>
         </div>
@@ -688,7 +688,7 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>Nonholonomic robots — like differential-drive wheeled robots — cannot move sideways. This nonholonomic constraint means that, by Brockett's theorem, no smooth time-invariant feedback law can asymptotically stabilize them. You need time-varying or discontinuous controllers, which are harder to design and analyze.</p>
+            <p>Nonholonomic robots, like differential-drive wheeled robots, cannot move sideways. This nonholonomic constraint means that, by Brockett's theorem, no smooth time-invariant feedback law can asymptotically stabilize them. You need time-varying or discontinuous controllers, which are harder to design and analyze.</p>
             <p>The challenge: implement a theoretically rigorous nonlinear controller that provably stabilizes the robot to a desired pose from any starting configuration, and verify this in simulation.</p>
           </div>
         </div>
@@ -696,7 +696,7 @@
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
             <p>I reproduced the nonlinear feedback control law from the paper <em>"Exponential Stabilization of Mobile Robots with Nonholonomic Constraints"</em> and implemented it in MATLAB for a two-wheeled robot model.</p>
-            <p>The controller was tested from a wide range of arbitrary initial conditions — different positions and headings — to demonstrate global exponential convergence of all robot states to the origin. Time-domain simulations show the state trajectories converging at an exponential rate, verifying the theoretical stability guarantees. This project deepened my understanding of nonlinear control theory, which now underpins my MPC work.</p>
+            <p>The controller was tested from a wide range of arbitrary initial conditions, different positions and headings, to demonstrate global exponential convergence of all robot states to the origin. Time-domain simulations show the state trajectories converging at an exponential rate, verifying the theoretical stability guarantees. This project deepened my understanding of nonlinear control theory, which now underpins my MPC work.</p>
           </div>
         </div>
       </div>
