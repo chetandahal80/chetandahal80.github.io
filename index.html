@@ -252,20 +252,16 @@
 
 <!-- PROJECTS -->
 <div class="projects-wrapper" id="projects">
-  <div class="projects-header">
-    <h2>Project <span>Case Studies</span></h2>
-    <p>Click any project to read the full breakdown: problem, approach, results, and system architecture.</p>
-  </div>
 
   <div class="filter-bar">
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="uav">UAV / Aerial</button>
+    <button class="filter-btn" data-filter="control">Control</button>
     <button class="filter-btn" data-filter="ml">Deep Learning</button>
-    <button class="filter-btn" data-filter="control">Planning &amp; Control</button>
     <button class="filter-btn" data-filter="embedded">Embedded / Edge</button>
   </div>
 
-  <!-- ── PROJECT 1 ── -->
+<!-- ── PROJECT 1 ── -->
   <div class="case-study" data-category="control">
     <div class="cs-header" onclick="toggleCS(this)">
       <div class="cs-header-left">
@@ -298,34 +294,32 @@
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
-            <p>I formulated the robot's kinematic model (differential drive) as a constrained nonlinear optimization problem solved in a receding-horizon MPC loop. Human positions from a tracker are fed into the MPC cost function and constraints at each timestep.</p>
-            <p>The cost function penalizes proximity to detected humans, while hard constraints ensure the robot stays within its dynamical limits. This generates smooth, reactive trajectories that adapt in real time. Validation is ongoing in ROS 2 simulation with Gazebo before hardware transfer.</p>
+            <p>Formulated the wheeled robot's kinematic model as a constrained optimisation problem. At each timestep MPC solves a short-horizon trajectory that minimises deviation from the goal while respecting velocity and acceleration limits.</p>
+            <p>Human position and velocity estimates (fed from the 3D tracker) are integrated into the cost function and as soft constraints, penalising trajectories that pass too close to predicted human paths. Validating the full pipeline in ROS 2 simulation.</p>
           </div>
         </div>
       </div>
       <div class="cs-pipeline">
-        <div class="pipeline-label">System Pipeline</div>
+        <div class="pipeline-label">Planning Pipeline</div>
         <div class="pipeline">
-          <div class="p-node">Human Tracker</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Human Position (3D)</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">MPC Cost + Constraints</div><div class="p-arrow">→</div>
-          <div class="p-node">Constrained Optimizer</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Control Commands (v, ω)</div><div class="p-arrow">→</div>
-          <div class="p-node">Robot</div>
+          <div class="p-node">Human positions (3D tracker)</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">MPC cost + constraints</div><div class="p-arrow">→</div>
+          <div class="p-node">Short-horizon optimisation</div><div class="p-arrow">→</div>
+          <div class="p-node highlight2">Safe velocity commands</div>
         </div>
       </div>
       <div class="cs-results">
         <div class="cs-section-label">Current Status</div>
         <div class="results-grid">
-          <div class="result-item"><div class="result-value">MPC</div><div class="result-label">Receding-horizon planner</div></div>
+          <div class="result-item"><div class="result-value">Active</div><div class="result-label">In development</div></div>
           <div class="result-item"><div class="result-value">ROS 2</div><div class="result-label">Simulation validation</div></div>
-          <div class="result-item"><div class="result-value">Real-time</div><div class="result-label">Control loop</div></div>
+          <div class="result-item"><div class="result-value">MPC</div><div class="result-label">Constrained optimisation planner</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── PROJECT 2 ── -->
+<!-- ── PROJECT 2 ── -->
   <div class="case-study" data-category="control">
     <div class="cs-header" onclick="toggleCS(this)">
       <div class="cs-header-left">
@@ -358,9 +352,8 @@
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
-            <p>I implemented and compared four control architectures in order of increasing sophistication. <strong style="color:var(--text)">Pole placement</strong> gives two isolated operating points but no understanding of the surrounding design space. <strong style="color:var(--text)">LQR with Bryson's Method</strong> gives one physically motivated point, but no way to know whether it is a good choice relative to other LQR designs.</p>
-            <p><strong style="color:var(--text)">LQR Pareto front (alpha-sweep)</strong> reveals the complete tradeoff curve for the LQR controller family. Bryson's point sits at the high-effort end, not an efficient choice. The knee point at α=0.0077 achieves comparable settling with 73% less control effort.</p>
-            <p>Finally, <strong style="color:var(--text)">NSGA-II</strong> searches all 12 Q/R diagonal entries independently rather than scaling a fixed baseline. Alpha-scaling traces a 1D curve through a 12-dimensional design space. NSGA-II searches all 12 dimensions and finds controllers that alpha-scaling can never reach. A Luenberger observer (poles at −20±2j, −25±2j) handles state estimation throughout.</p>
+            <p>Implemented four control architectures in order of increasing sophistication. <strong style="color:var(--text)">Pole placement</strong> gives two isolated operating points but no understanding of the surrounding design space. <strong style="color:var(--text)">LQR with Bryson's Method</strong> gives one physically motivated point, but no way to know whether it is a good choice relative to other LQR designs.</p>
+            <p><strong style="color:var(--text)">LQR Pareto front (alpha-sweep)</strong> reveals the complete tradeoff curve. Bryson's point sits at the high-effort end. The knee point at α=0.0077 achieves comparable settling with 73% less effort. Finally, <strong style="color:var(--text)">NSGA-II</strong> searches all 12 Q/R diagonal entries independently, finding controllers that alpha-scaling can never reach. A Luenberger observer handles state estimation throughout.</p>
           </div>
         </div>
       </div>
@@ -393,7 +386,7 @@
           <div class="result-item"><div class="result-value">1.8s</div><div class="result-label">NSGA-II settling time (knee)</div></div>
           <div class="result-item"><div class="result-value">3.5</div><div class="result-label">NSGA-II RMS effort (knee)</div></div>
           <div class="result-item"><div class="result-value">73%</div><div class="result-label">Less effort vs Bryson's Method</div></div>
-          <div class="result-item"><div class="result-value">12D</div><div class="result-label">Q/R space searched by NSGA-II vs LQR's 1D</div></div>
+          <div class="result-item"><div class="result-value">12D</div><div class="result-label">Q/R space searched by NSGA-II vs 1D</div></div>
           <div class="result-item"><div class="result-value">2.6 min</div><div class="result-label">10,000 LQR designs evaluated</div></div>
           <div class="result-item"><div class="result-value">10th</div><div class="result-label">Order augmented system</div></div>
         </div>
@@ -401,7 +394,7 @@
     </div>
   </div>
 
-  <!-- ── PROJECT 3 ── -->
+<!-- ── PROJECT 3 ── -->
   <div class="case-study" data-category="uav">
     <div class="cs-header" onclick="toggleCS(this)">
       <div class="cs-header-left">
@@ -433,45 +426,41 @@
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
-            <p>I built the full simulation stack from scratch: PX4 SITL for flight control, interfaced with ROS, running inside a custom Gazebo world representing a cluttered indoor environment.</p>
-            <p>Hector SLAM provides pose estimation and map building using only a 2D LiDAR, with no GPS required. A map-driven obstacle avoidance layer guides the UAV through the space. Radiation readings are projected onto the occupancy grid and visualized as a heatmap in RViz, giving operators a live picture of contamination distribution.</p>
-            <p>Key sim-to-real challenges I addressed: TF frame consistency across the full stack, sensor noise modeling, and coordinate frame alignment between PX4's NED frame and ROS's ENU convention.</p>
+            <p>Built the autonomy stack in ROS, integrating PX4 SITL with Gazebo for realistic simulation of flight control, sensors, and autonomy logic. Hector SLAM provides GPS-free localisation, maintaining a 2D occupancy grid that feeds the obstacle avoidance layer.</p>
+            <p>Radiation readings are georeferenced against the SLAM map and rendered as a colour-coded 2D grid map in RViz, updated live as the UAV flies. Addressed sim-to-real challenges including TF frame consistency, sensor noise, and timestamp alignment across the ROS graph.</p>
           </div>
         </div>
       </div>
       <div class="cs-pipeline">
-        <div class="pipeline-label">System Architecture</div>
+        <div class="pipeline-label">Autonomy Pipeline</div>
         <div class="pipeline">
-          <div class="p-node">2D LiDAR</div><div class="p-arrow">→</div>
+          <div class="p-node">LiDAR / IMU</div><div class="p-arrow">→</div>
           <div class="p-node highlight">Hector SLAM</div><div class="p-arrow">→</div>
-          <div class="p-node">Pose + Map</div><div class="p-arrow">→</div>
-          <div class="p-node">Obstacle Avoidance</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">PX4 Flight Control</div>
-          <div class="p-arrow" style="width:100%;flex-basis:100%;height:0"></div>
-          <div class="p-node">Radiation Sensor</div><div class="p-arrow">→</div>
-          <div class="p-node highlight2">Grid Map Fusion</div><div class="p-arrow">→</div>
-          <div class="p-node highlight2">RViz Heatmap</div>
+          <div class="p-node">Occupancy Grid</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">Obstacle Avoidance</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">Radiation Sensor Fusion</div><div class="p-arrow">→</div>
+          <div class="p-node highlight2">Live Radiation Map</div>
         </div>
       </div>
       <div class="cs-video">
         <div class="cs-section-label">Demo Video</div>
         <video controls preload="none" oncanplay="this.nextElementSibling.classList.add('hidden')">
-          <source src="videos/02-radiation-mapping.mp4" type="video/mp4">
+          <source src="videos/radiation-mapping.mp4" type="video/mp4">
         </video>
-        <p class="video-hint">No demo yet. Upload <code>videos/02-radiation-mapping.mp4</code> to your repo and it will appear here.</p>
+        <p class="video-hint">Upload <code>videos/radiation-mapping.mp4</code> to your repo and it will appear here.</p>
       </div>
       <div class="cs-results">
         <div class="cs-section-label">Outcomes</div>
         <div class="results-grid">
-          <div class="result-item"><div class="result-value">GPS-free</div><div class="result-label">LiDAR-only localization</div></div>
-          <div class="result-item"><div class="result-value">Full stack</div><div class="result-label">PX4 → ROS → SLAM → Viz</div></div>
-          <div class="result-item"><div class="result-value">Real-time</div><div class="result-label">Radiation grid mapping</div></div>
+          <div class="result-item"><div class="result-value">GPS-free</div><div class="result-label">Indoor SLAM-based navigation</div></div>
+          <div class="result-item"><div class="result-value">Real-time</div><div class="result-label">Live radiation map in RViz</div></div>
+          <div class="result-item"><div class="result-value">End-to-end</div><div class="result-label">Full autonomy pipeline in ROS</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── PROJECT 4 ── -->
+<!-- ── PROJECT 4 ── -->
   <div class="case-study" data-category="uav">
     <div class="cs-header" onclick="toggleCS(this)">
       <div class="cs-header-left">
@@ -504,39 +493,32 @@
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
-            <p>I assembled the quadrotor from scratch using commercial frames and electronic components, then tuned the flight controller for stable hover. An NVIDIA Jetson Orin Nano was selected as the onboard computer for its GPU-accelerated compute in a power-efficient package.</p>
-            <p>FAST-LIO, a tightly-coupled LiDAR-inertial odometry algorithm, was integrated and configured for real-time operation on the Jetson. It fuses LiDAR point clouds with IMU data to estimate pose at high frequency, producing a dense 3D map of the environment as the UAV flies. This work directly supports the wildfire fuel moisture estimation research at UNLV's lab.</p>
+            <p>Assembled and tuned the custom quadrotor frame, ESCs, and flight controller from scratch, iterating until the platform flew stably enough for SLAM. This hardware-software co-tuning is rarely discussed but is critical — vibration and wobble directly corrupt LiDAR point clouds.</p>
+            <p>FAST-LIO, a tightly-coupled LiDAR-inertial odometry algorithm, was then integrated and configured for real-time operation on the Jetson Orin Nano. It fuses LiDAR point clouds with IMU data at high frequency to estimate pose and build a dense 3D map entirely onboard, with no ground station involvement.</p>
           </div>
         </div>
       </div>
       <div class="cs-pipeline">
-        <div class="pipeline-label">Sensor Fusion Pipeline</div>
+        <div class="pipeline-label">Onboard SLAM Pipeline</div>
         <div class="pipeline">
-          <div class="p-node">3D LiDAR</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Point Cloud</div>
-          <div class="p-arrow" style="margin: 0 0.3rem">+</div>
-          <div class="p-node">IMU</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">FAST-LIO (Tightly Coupled)</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Pose Estimate + 3D Map</div><div class="p-arrow">→</div>
-          <div class="p-node">Jetson Orin Nano</div>
+          <div class="p-node">LiDAR + IMU</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">FAST-LIO (tightly coupled)</div><div class="p-arrow">→</div>
+          <div class="p-node">Pose estimate</div><div class="p-arrow">→</div>
+          <div class="p-node highlight2">Dense 3D Map</div>
         </div>
       </div>
       <div class="cs-results">
         <div class="cs-section-label">Outcomes</div>
         <div class="results-grid">
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Outcomes</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">Onboard</div><div class="result-label">No ground station needed</div></div>
-          <div class="result-item"><div class="result-value">3D Map</div><div class="result-label">Real-time dense mapping</div></div>
-          <div class="result-item"><div class="result-value">Custom</div><div class="result-label">Self-built quadrotor</div></div>
+          <div class="result-item"><div class="result-value">Onboard</div><div class="result-label">No ground station offloading</div></div>
+          <div class="result-item"><div class="result-value">Real-time</div><div class="result-label">3D mapping during flight</div></div>
+          <div class="result-item"><div class="result-value">Custom HW</div><div class="result-label">Self-built quadrotor platform</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── PROJECT 5 ── -->
+<!-- ── PROJECT 5 ── -->
   <div class="case-study" data-category="ml">
     <div class="cs-header" onclick="toggleCS(this)">
       <div class="cs-header-left">
@@ -568,38 +550,34 @@
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
-            <p>I implemented a <strong style="color:var(--text)">Hybrid 3D-2D U-Net</strong>: the encoder uses 3D convolutions to extract spectral-spatial features from the hyperspectral patch, which are then decoded through 2D layers to produce the continuous NDVI output map. This achieved RMSE 0.0443 and R² 0.86.</p>
-            <p>To push further, I integrated <strong style="color:var(--text)">Transformer encoders into the CNN bottleneck</strong>, combining local feature extraction with global context modelling across the spatial dimensions. This hybrid architecture achieved RMSE 0.0208 and R² 0.9692, a significant jump. Training used global min-max normalization, data augmentation, and validation-based checkpointing throughout.</p>
+            <p>Designed a Hybrid 3D-2D U-Net: 3D convolutions in the encoder extract spectral-spatial features across all bands, then a 2D decoder maps these to a dense NDVI output. This hybrid architecture captures spectral depth without the full cost of a 3D network throughout.</p>
+            <p>Transformer encoders were integrated into the CNN bottleneck to capture global spatial context alongside local feature extraction. The training loop includes data augmentation, global min-max normalisation, and validation-based checkpointing to prevent overfitting on the limited hyperspectral dataset.</p>
           </div>
         </div>
       </div>
       <div class="cs-pipeline">
         <div class="pipeline-label">Model Architecture</div>
         <div class="pipeline">
-          <div class="p-node">Hyperspectral Patch (3D)</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">3D Conv Encoder</div><div class="p-arrow">→</div>
-          <div class="p-node highlight2">Transformer Bottleneck</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">2D Conv Decoder</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">NDVI Map (2D)</div>
+          <div class="p-node">Hyperspectral input (3D)</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">3D CNN encoder</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">Transformer bottleneck</div><div class="p-arrow">→</div>
+          <div class="p-node">2D decoder</div><div class="p-arrow">→</div>
+          <div class="p-node highlight2">NDVI map output</div>
         </div>
       </div>
       <div class="cs-results">
         <div class="cs-section-label">Results</div>
         <div class="results-grid">
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Results</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">0.0208</div><div class="result-label">RMSE (best model)</div></div>
-          <div class="result-item"><div class="result-value">0.9692</div><div class="result-label">R² score</div></div>
-          <div class="result-item"><div class="result-value">3D→2D</div><div class="result-label">Hybrid U-Net architecture</div></div>
-          <div class="result-item"><div class="result-value">+CNN</div><div class="result-label">Transformer bottleneck</div></div>
+          <div class="result-item"><div class="result-value">0.9692</div><div class="result-label">R² (final model)</div></div>
+          <div class="result-item"><div class="result-value">0.0208</div><div class="result-label">RMSE (final model)</div></div>
+          <div class="result-item"><div class="result-value">0.86</div><div class="result-label">R² (baseline U-Net)</div></div>
+          <div class="result-item"><div class="result-value">0.0443</div><div class="result-label">RMSE (baseline U-Net)</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── PROJECT 6 ── -->
+<!-- ── PROJECT 6 ── -->
   <div class="case-study" data-category="control">
     <div class="cs-header" onclick="toggleCS(this)">
       <div class="cs-header-left">
@@ -631,45 +609,41 @@
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
-            <p>YOLOv8 detects people in the RGB image. For each detection, the corresponding depth value is used to back-project the 2D bounding box center into a 3D position in the robot's coordinate frame.</p>
-            <p>A <strong style="color:var(--text)">multi-target Kalman filter</strong> maintains a smoothed estimate of each person's 3D position and velocity over time. The hardest part is the data association problem: when there are multiple detections and multiple tracks, which detection belongs to which track? I applied the <strong style="color:var(--text)">Jonker-Volgenant algorithm</strong>, an efficient implementation of optimal assignment, to solve this robustly at each timestep, enabling stable identities even in crowded scenes.</p>
+            <p>YOLOv8 detects people in the RGB image. For each detection, the corresponding depth value back-projects the 2D bounding box centre into a 3D position in the robot frame. A <strong style="color:var(--text)">multi-target Kalman filter</strong> maintains smoothed estimates of each person's 3D position and velocity over time.</p>
+            <p>The hardest part is data association: when there are multiple detections and tracks, which detection belongs to which track? The <strong style="color:var(--text)">Jonker-Volgenant algorithm</strong>, an efficient optimal assignment solver, resolves this at each timestep, enabling stable track identities even in crowded scenes.</p>
           </div>
         </div>
       </div>
       <div class="cs-pipeline">
         <div class="pipeline-label">Tracking Pipeline</div>
         <div class="pipeline">
-          <div class="p-node">RGB-D Camera</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">YOLOv8 Detection</div><div class="p-arrow">→</div>
-          <div class="p-node">Depth Backprojection</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">3D Detections</div><div class="p-arrow">→</div>
-          <div class="p-node highlight2">Jonker-Volgenant Assignment</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Kalman Filter Tracks</div>
+          <div class="p-node">RGB-D frame</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">YOLOv8 detection</div><div class="p-arrow">→</div>
+          <div class="p-node">3D back-projection</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">Jonker-Volgenant assignment</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">Kalman filter update</div><div class="p-arrow">→</div>
+          <div class="p-node highlight2">Stable 3D tracks</div>
         </div>
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Outcomes</div>
-        <div class="results-grid">
       </div>
       <div class="cs-video">
         <div class="cs-section-label">Demo Video</div>
         <video controls preload="none" oncanplay="this.nextElementSibling.classList.add('hidden')">
-          <source src="videos/05-human-tracking.mp4" type="video/mp4">
+          <source src="videos/human-tracking.mp4" type="video/mp4">
         </video>
-        <p class="video-hint">No demo yet. Upload <code>videos/05-human-tracking.mp4</code> to your repo and it will appear here.</p>
+        <p class="video-hint">Upload <code>videos/human-tracking.mp4</code> to your repo and it will appear here.</p>
       </div>
       <div class="cs-results">
         <div class="cs-section-label">Outcomes</div>
         <div class="results-grid">
-          <div class="result-item"><div class="result-value">Multi</div><div class="result-label">Simultaneous person tracking</div></div>
-          <div class="result-item"><div class="result-value">3D</div><div class="result-label">Position + velocity estimates</div></div>
-          <div class="result-item"><div class="result-value">Stable</div><div class="result-label">Track IDs under occlusion</div></div>
+          <div class="result-item"><div class="result-value">Multi-target</div><div class="result-label">Simultaneous person tracking</div></div>
+          <div class="result-item"><div class="result-value">3D position</div><div class="result-label">Depth-fused estimates in robot frame</div></div>
+          <div class="result-item"><div class="result-value">Stable IDs</div><div class="result-label">Persistent identities across frames</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── PROJECT 7 ── -->
+<!-- ── PROJECT 7 ── -->
   <div class="case-study" data-category="embedded">
     <div class="cs-header" onclick="toggleCS(this)">
       <div class="cs-header-left">
@@ -701,32 +675,165 @@
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
-            <p>I designed and built an STM32 + MEMS IMU prototype using MEMS Studio to capture wrist and forearm motion during simulated hand-tool tasks. The IMU records acceleration and angular velocity at the wrist.</p>
-            <p>A TinyML model was trained to classify motion windows as safe vs. unsafe posture, then quantized and deployed directly onto the STM32 microcontroller. The result: real-time on-device inference with no host computer required, at approximately 94% classification accuracy, a proof-of-concept that compact AI can work for workplace safety monitoring.</p>
+            <p>Built a wearable prototype using an STM32 microcontroller and a MEMS IMU, developed in MEMS Studio. The IMU captures wrist and forearm motion during tool use, and the data was used to train a TinyML classifier to recognise operation type and posture.</p>
+            <p>The model was quantised and deployed directly onto the MCU, running inference in real time without any wireless streaming or cloud dependency. The classifier distinguishes between safe and unsafe ergonomic postures at the point of use.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cs-results">
+        <div class="cs-section-label">Results</div>
+        <div class="results-grid">
+          <div class="result-item"><div class="result-value">~94%</div><div class="result-label">On-device classification accuracy</div></div>
+          <div class="result-item"><div class="result-value">Real-time</div><div class="result-label">Live posture feedback on MCU</div></div>
+          <div class="result-item"><div class="result-value">No cloud</div><div class="result-label">Fully edge-deployed inference</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- ── PROJECT 8 ── -->
+  <div class="case-study" data-category="ml">
+    <div class="cs-header" onclick="toggleCS(this)">
+      <div class="cs-header-left">
+        <div class="cs-meta">
+          <span class="cs-num">08</span>
+          <span class="cs-cat-badge cat-ml">ML / Perception</span>
+        </div>
+        <div class="cs-title">Sudoku Solver using OpenCV, CNN and Dancing Links</div>
+        <div class="cs-tagline">End-to-end vision pipeline that reads a Sudoku puzzle from an image, recognises digits with a CNN, and solves it using the Dancing Links algorithm.</div>
+      </div>
+      <div class="cs-header-right">
+        <div class="cs-date">Mar 2024</div>
+        <div class="cs-toggle">＋</div>
+      </div>
+    </div>
+    <div class="cs-tags-row">
+      <span class="cs-tag">Python</span><span class="cs-tag">OpenCV</span><span class="cs-tag">CNN</span>
+      <span class="cs-tag">Dancing Links (DLX)</span><span class="cs-tag">Image Processing</span>
+    </div>
+    <div class="cs-body">
+      <div class="cs-grid">
+        <div class="cs-col">
+          <div class="cs-section-label">The Challenge</div>
+          <div class="cs-text">
+            <p>Building a solver that works end-to-end from a raw image requires solving three distinct problems: detecting and rectifying the grid, recognising digits reliably under imaging variability, and then solving the puzzle efficiently.</p>
+          </div>
+        </div>
+        <div class="cs-col">
+          <div class="cs-section-label">My Approach</div>
+          <div class="cs-text">
+            <p>Used OpenCV to detect the grid and segment individual cells. Trained a CNN classifier for digit recognition under lighting and perspective variability. Implemented and compared three solvers: constraint propagation, Dancing Links (DLX), and an optimised DLX variant.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cs-results">
+        <div class="cs-section-label">Outcomes</div>
+        <div class="results-grid">
+          <div class="result-item"><div class="result-value">3</div><div class="result-label">Solver strategies compared</div></div>
+          <div class="result-item"><div class="result-value">End-to-end</div><div class="result-label">Image in, solution out</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- ── PROJECT 9 ── -->
+  <div class="case-study" data-category="control">
+    <div class="cs-header" onclick="toggleCS(this)">
+      <div class="cs-header-left">
+        <div class="cs-meta">
+          <span class="cs-num">09</span>
+          <span class="cs-cat-badge cat-control">Control</span>
+        </div>
+        <div class="cs-title">Exponential Stabilisation of a Nonholonomic Mobile Robot</div>
+        <div class="cs-tagline">Simulation study reproducing and validating a nonlinear feedback control law for exponential stabilisation of a two-wheeled mobile robot from arbitrary initial conditions.</div>
+      </div>
+      <div class="cs-header-right">
+        <div class="cs-date">Nov 2022</div>
+        <div class="cs-toggle">＋</div>
+      </div>
+    </div>
+    <div class="cs-tags-row">
+      <span class="cs-tag">MATLAB</span><span class="cs-tag">Nonlinear Control</span><span class="cs-tag">Robot Kinematics</span>
+      <span class="cs-tag">Time-Domain Simulation</span>
+    </div>
+    <div class="cs-body">
+      <div class="cs-grid">
+        <div class="cs-col">
+          <div class="cs-section-label">The Challenge</div>
+          <div class="cs-text">
+            <p>Nonholonomic systems cannot be stabilised by smooth time-invariant feedback — standard linear control does not apply. Stabilising a two-wheeled robot to a fixed pose requires a nonlinear control law with provable convergence guarantees.</p>
+          </div>
+        </div>
+        <div class="cs-col">
+          <div class="cs-section-label">My Approach</div>
+          <div class="cs-text">
+            <p>Implemented the nonlinear feedback control law from the paper "Exponential Stabilization of Mobile Robots with Nonholonomic Constraints" in MATLAB. Validated global exponential convergence of all states from arbitrary initial conditions through time-domain simulation, verifying the stability guarantees predicted by theory.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cs-results">
+        <div class="cs-section-label">Outcomes</div>
+        <div class="results-grid">
+          <div class="result-item"><div class="result-value">Global</div><div class="result-label">Exponential convergence verified</div></div>
+          <div class="result-item"><div class="result-value">Arbitrary</div><div class="result-label">Initial conditions tested</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROJECT 10 ── -->
+  <div class="case-study" data-category="control">
+    <div class="cs-header" onclick="toggleCS(this)">
+      <div class="cs-header-left">
+        <div class="cs-meta">
+          <span class="cs-num">10</span>
+          <span class="cs-cat-badge cat-control">Control</span>
+        </div>
+        <div class="cs-title">Perimeter-Defense Game: One Attacker vs One Defender</div>
+        <div class="cs-tagline">MATLAB simulation of an optimal pursuit-evasion game where an attacker tries to breach a circular perimeter and a defender tries to intercept it, using differential game theory to derive and visualise the winning regions.</div>
+      </div>
+      <div class="cs-header-right">
+        <div class="cs-date">Jul 2022</div>
+        <div class="cs-toggle">＋</div>
+      </div>
+    </div>
+    <div class="cs-tags-row">
+      <span class="cs-tag">MATLAB</span><span class="cs-tag">Differential Game Theory</span><span class="cs-tag">Pursuit-Evasion</span>
+      <span class="cs-tag">Optimal Control</span><span class="cs-tag">Game Theory</span>
+    </div>
+    <div class="cs-body">
+      <div class="cs-grid">
+        <div class="cs-col">
+          <div class="cs-section-label">The Problem</div>
+          <div class="cs-text">
+            <p>A defender moves along the perimeter of a circular target region. An attacker starts outside and tries to reach the perimeter without being intercepted. The key parameter is the speed ratio v = v_attacker / v_defender. When the attacker is slower, can it still find a guaranteed winning strategy?</p>
+            <p>This is a two-player zero-sum differential game: both players act optimally and in opposition. The challenge is deriving closed-form optimal strategies and the exact boundary that separates winning initial conditions from losing ones.</p>
+          </div>
+        </div>
+        <div class="cs-col">
+          <div class="cs-section-label">My Approach</div>
+          <div class="cs-text">
+            <p>Based on Shishika and Kumar (CDC 2018), I implemented the two-player game from first principles in MATLAB. The defender's optimal strategy is to track the attacker's angular position at maximum speed. The attacker's optimal strategy is to head towards the tangent point on the perimeter that maximises its lead over the defender.</p>
+            <p>The winning region boundary is an involute of the circle, derived from the game's value function V. I simulated state trajectories for multiple initial conditions to verify that the theory holds: attacker wins if and only if it starts inside the involute region.</p>
           </div>
         </div>
       </div>
       <div class="cs-pipeline">
-        <div class="pipeline-label">Edge AI Pipeline</div>
+        <div class="pipeline-label">Game Structure</div>
         <div class="pipeline">
-          <div class="p-node">MEMS IMU (Wrist)</div><div class="p-arrow">→</div>
-          <div class="p-node">Motion Window</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">TinyML Model</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Safe / Unsafe</div>
-          <div class="p-arrow" style="width:100%;flex-basis:100%;height:8px"></div>
-          <div class="p-node highlight2">All running on STM32 MCU, no cloud</div>
+          <div class="p-node">Initial positions</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">Value function V</div><div class="p-arrow">→</div>
+          <div class="p-node">Winning region (involute)</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">Optimal strategies</div><div class="p-arrow">→</div>
+          <div class="p-node highlight2">Intercept or breach</div>
         </div>
       </div>
       <div class="cs-results">
-        <div class="cs-section-label">Results</div>
+        <div class="cs-section-label">Outcomes</div>
         <div class="results-grid">
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Results</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">~94%</div><div class="result-label">On-device accuracy</div></div>
-          <div class="result-item"><div class="result-value">On-MCU</div><div class="result-label">No cloud inference</div></div>
-          <div class="result-item"><div class="result-value">Real-time</div><div class="result-label">Live posture feedback</div></div>
+          <div class="result-item"><div class="result-value">Verified</div><div class="result-label">Optimal strategies from differential game theory</div></div>
+          <div class="result-item"><div class="result-value">Involute</div><div class="result-label">Winning region boundary visualised</div></div>
+          <div class="result-item"><div class="result-value">Speed ratio</div><div class="result-label">Effect of v on winning region simulated</div></div>
         </div>
       </div>
     </div>
@@ -738,25 +845,22 @@
 <footer>
   <div class="footer-links">
     <a href="mailto:dahalc1@unlv.nevada.edu">dahalc1@unlv.nevada.edu</a>
-    <a href="tel:7028138825">702-813-8825</a>
-    <a href="https://github.com/chetandahal80" target="_blank">github.com/chetandahal80</a>
-    <a href="https://linkedin.com/in/chetandahal" target="_blank">linkedin.com/in/chetandahal</a>
+    <a href="https://github.com/chetandahal80" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/chetandahal" target="_blank">LinkedIn</a>
   </div>
-  <p>© 2026 Chetan Dahal · MS Electrical Engineering · University of Nevada, Las Vegas</p>
+  <div class="footer-copy">Built with care. Hosted on GitHub Pages.</div>
 </footer>
 
 <script>
-  // Toggle case study open/close
   function toggleCS(header) {
     const card = header.closest('.case-study');
     const body = card.querySelector('.cs-body');
     const toggle = header.querySelector('.cs-toggle');
     const isOpen = body.classList.contains('open');
     body.classList.toggle('open', !isOpen);
-    toggle.textContent = isOpen ? '＋' : '－';
+    toggle.textContent = isOpen ? '\uFF0B' : '\uFF0D';
   }
 
-  // Filter buttons
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -768,9 +872,8 @@
     });
   });
 
-  // Open first project by default
   const firstHeader = document.querySelector('.cs-header');
   if (firstHeader) toggleCS(firstHeader);
 </script>
 </body>
-</html>           
+</html>
