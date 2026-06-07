@@ -225,17 +225,20 @@
     <a href="mailto:dahalc1@unlv.nevada.edu">dahalc1@unlv.nevada.edu</a>
     <a href="https://github.com/chetandahal80" target="_blank">GitHub</a>
     <a href="https://linkedin.com/in/chetandahal" target="_blank">LinkedIn</a>
-    <a href="mailto:dahalc1@unlv.nevada.edu" class="nav-btn">Hire Me</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="dot-live"></span>
+    </div>
     <h1 class="hero-name">Chetan Dahal</h1>
     <p class="hero-sub">MS Electrical Engineering · UNLV Graduate Research Assistant</p>
     <p class="hero-desc">
-      I build autonomous robots that work in the real world: UAVs, mobile robots, and
-      embedded AI systems. Below is a detailed look at the projects I've designed, built, and shipped.
+      I build autonomous robots that work in the real world: UAVs, mobile robots and
+      embedded AI systems. Below is a detailed look at the projects I've designed and built.
     </p>
     <div class="hero-links">
       <a href="#projects" class="pill pill-solid">Explore Projects ↓</a>
@@ -323,7 +326,7 @@
           <span class="cs-cat-badge cat-control">Planning &amp; Control</span>
         </div>
         <div class="cs-title">CR3BP Spacecraft Control at Earth-Moon L2</div>
-        <div class="cs-tagline">Stabilising a spacecraft at an unstable Lagrange point under persistent disturbances, comparing pole placement, LQR, and NSGA-II multi-objective optimisation to show that how you tune Q/R matters as much as which controller you pick.</div>
+        <div class="cs-tagline">Stabilising a spacecraft at an unstable Lagrange point under persistent disturbances, comparing pole placement, LQR and NSGA-II multi-objective optimisation to show that how you tune Q/R matters as much as which controller you pick.</div>
       </div>
       <div class="cs-header-right">
         <div class="cs-date">May 2026</div>
@@ -339,7 +342,7 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>The Earth-Moon L2 Lagrange point is an unstable equilibrium: a spacecraft placed there will drift away without active control. The open-loop dynamics have an unstable eigenvalue at ±2.1587, so the controller must first stabilise that instability.</p>
+            <p>The Earth-Moon L2 Lagrange point is an unstable equilibrium: a spacecraft placed there will drift away without active control. The open-loop dynamics have an unstable eigenvalue at +2.1587, so the controller must first stabilise that instability.</p>
             <p>On top of that, persistent sinusoidal disturbances act on the system at 1 rad/s. The controller must simultaneously stabilise the unstable dynamics <em>and</em> reject these disturbances asymptotically. To enforce rejection via the Internal Model Principle, a servo-compensator was augmented to the plant, bringing the full system to 10th order.</p>
             <p>The deeper question this project asks: <strong style="color:var(--text)">is Bryson's Method actually a good way to tune an LQR controller for mission-relevant performance?</strong> The answer, it turns out, is no. The project demonstrates this systematically.</p>
           </div>
@@ -488,7 +491,7 @@
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
-            <p>Assembled and tuned the custom quadrotor frame, ESCs, and flight controller from scratch, iterating until the platform flew stably enough for SLAM. This hardware-software co-tuning is rarely discussed but is critical — vibration and wobble directly corrupt LiDAR point clouds.</p>
+            <p>Assembled and tuned the custom quadrotor frame, ESCs, and flight controller from scratch, iterating until the platform flew stably enough for SLAM. This hardware-software co-tuning is rarely discussed but is critical as vibration and wobble directly corrupt LiDAR point clouds.</p>
             <p>FAST-LIO, a tightly-coupled LiDAR-inertial odometry algorithm, was then integrated and configured for real-time operation on the Jetson Orin Nano. It fuses LiDAR point clouds with IMU data at high frequency to estimate pose and build a dense 3D map entirely onboard, with no ground station involvement.</p>
           </div>
         </div>
@@ -597,7 +600,7 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>For a robot to safely navigate around people, it needs more than "there's a person at pixel (x, y)." It needs stable 3D position estimates across multiple people, accounting for sensor noise, occlusions, and the fact that people come and go from the scene.</p>
+            <p>For a robot to safely navigate around people, it needs more than "there's a person at pixel (x, y)." It needs stable 3D position estimates across multiple people, accounting for sensor noise, occlusions and the fact that people come and go from the scene.</p>
             <p>Naive detection-only approaches flicker and lose track identity, making them unreliable for safety-critical use. The challenge was building a tracker that stays stable across time, even under noisy depth readings and partial occlusions.</p>
           </div>
         </div>
@@ -695,7 +698,7 @@
           <span class="cs-cat-badge cat-ml">ML / Perception</span>
         </div>
         <div class="cs-title">Sudoku Solver using OpenCV, CNN and Dancing Links</div>
-        <div class="cs-tagline">End-to-end vision pipeline that reads a Sudoku puzzle from an image, recognises digits with a CNN, and solves it using the Dancing Links algorithm.</div>
+        <div class="cs-tagline">End-to-end vision pipeline that reads a Sudoku puzzle from an image, recognises digits with a CNN and solves it using the Dancing Links algorithm.</div>
       </div>
       <div class="cs-header-right">
         <div class="cs-date">Mar 2024</div>
@@ -711,13 +714,13 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>Building a solver that works end-to-end from a raw image requires solving three distinct problems: detecting and rectifying the grid, recognising digits reliably under imaging variability, and then solving the puzzle efficiently.</p>
+            <p>Building a solver that works end-to-end from a raw image requires solving three distinct problems: detecting and rectifying the grid, recognising digits reliably under imaging variability and then solving the puzzle efficiently.</p>
           </div>
         </div>
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
-            <p>Used OpenCV to detect the grid and segment individual cells. Trained a CNN classifier for digit recognition under lighting and perspective variability. Implemented and compared three solvers: constraint propagation, Dancing Links (DLX), and an optimised DLX variant.</p>
+            <p>Used OpenCV to detect the grid and segment individual cells. Trained a CNN classifier for digit recognition under lighting and perspective variability. Implemented and compared three solvers: constraint propagation, Dancing Links (DLX) and an optimised DLX variant.</p>
           </div>
         </div>
       </div>
@@ -756,7 +759,7 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>Nonholonomic systems cannot be stabilised by smooth time-invariant feedback — standard linear control does not apply. Stabilising a two-wheeled robot to a fixed pose requires a nonlinear control law with provable convergence guarantees.</p>
+            <p>Nonholonomic systems cannot be stabilised by smooth time-invariant feedback as standard linear control does not apply. Stabilising a two-wheeled robot to a fixed pose requires a nonlinear control law with provable convergence guarantees.</p>
           </div>
         </div>
         <div class="cs-col">
@@ -808,7 +811,7 @@
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
-            <p>Based on Shishika and Kumar (CDC 2018), I implemented the two-player game from first principles in MATLAB. The defender's optimal strategy is to track the attacker's angular position at maximum speed. The attacker's optimal strategy is to head towards the tangent point on the perimeter that maximises its lead over the defender.</p>
+            <p>Based on Shishika and Kumar (CDC 2018), I simulated the two-player game from first principles in MATLAB. The defender's optimal strategy is to track the attacker's angular position at maximum speed. The attacker's optimal strategy is to head towards the tangent point on the perimeter that maximises its lead over the defender.</p>
             <p>The winning region boundary is an involute of the circle, derived from the game's value function V. I simulated state trajectories for multiple initial conditions to verify that the theory holds: attacker wins if and only if it starts inside the involute region.</p>
           </div>
         </div>
