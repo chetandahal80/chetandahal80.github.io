@@ -247,8 +247,8 @@
           <span class="cs-cat-badge cat-control">Planning &amp; Control</span>
           <span class="cs-live-badge"><span class="dot-live"></span> Active</span>
         </div>
-        <div class="cs-title">Human-Aware Trajectory Planning via Model Predictive Control</div>
-        <div class="cs-tagline">Designing a wheeled mobile robot that plans dynamically safe paths around moving humans in real time.</div>
+        <div class="cs-title">Human-Aware Trajectory Planning with Formally Safe MPC</div>
+        <div class="cs-tagline">Replacing heuristic safety constraints in an MPC motion planner with Control Barrier Functions to give a wheeled mobile robot formally certified, collision-free navigation around moving humans.</div>
       </div>
       <div class="cs-header-right">
         <div class="cs-date">Jun 2026 to Present</div>
@@ -256,7 +256,7 @@
       </div>
     </div>
     <div class="cs-tags-row">
-      <span class="cs-tag">ROS 2</span><span class="cs-tag">MPC</span><span class="cs-tag">Optimization</span>
+      <span class="cs-tag">ROS 2</span><span class="cs-tag">MPC</span><span class="cs-tag">CBF</span>
       <span class="cs-tag">Motion Planning</span><span class="cs-tag">Human-Robot Interaction</span><span class="cs-tag">Python / C++</span>
     </div>
     <div class="cs-body">
@@ -264,24 +264,24 @@
         <div class="cs-col">
           <div class="cs-section-label">The Challenge</div>
           <div class="cs-text">
-            <p>Most mobile robots plan paths as if humans are static obstacles. In real shared spaces (warehouses, hospitals, labs) humans move unpredictably. A robot that ignores human motion will either stop constantly or create unsafe close-passes that erode trust.</p>
-            <p>The goal: build a planner that treats human motion as a first-class input, generating trajectories that are not just collision-free but socially comfortable, maintaining appropriate distances without sacrificing robot efficiency.</p>
+            <p>Most MPC planners enforce safety around moving humans through heuristic, soft-constraint penalties. These give no formal guarantee that the robot will actually avoid collisions, they only discourage close passes through the cost function.</p>
+            <p>The goal: replace those heuristics with Control Barrier Functions (CBFs) that provide mathematically certified collision-avoidance guarantees, a provably stronger alternative , while keeping the planner real-time and smooth enough for shared human-robot environments.</p>
           </div>
         </div>
         <div class="cs-col">
           <div class="cs-section-label">My Approach</div>
           <div class="cs-text">
-            <p>Formulated the wheeled robot's kinematic model as a constrained optimisation problem. At each timestep MPC solves a short-horizon trajectory that minimises deviation from the goal while respecting velocity and acceleration limits.</p>
-            <p>Human position and velocity estimates (fed from the 3D tracker) are integrated into the cost function and as soft constraints, penalising trajectories that pass too close to predicted human paths. Validating the full pipeline in ROS 2 simulation.</p>
+            <p>Developing an MPC-based motion planning pipeline for a wheeled mobile robot, with real-time human state estimation via YOLOv8 detection and Kalman filter tracking feeding directly into the planner's safety layer.</p>
+            <p>Conducting relative degree analysis of position-based safety constraints under double-integrator robot dynamics, deriving Exponential CBF (ECBF) conditions and CLF-CBF QP formulations for real-time safety-critical control. Implementing and validating the CBF-augmented MPC planner in ROS 2 simulation, targeting smooth, safe navigation around moving humans.</p>
           </div>
         </div>
       </div>
       <div class="cs-pipeline">
         <div class="pipeline-label">Planning Pipeline</div>
         <div class="pipeline">
-          <div class="p-node">Human positions (3D tracker)</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">MPC cost + constraints</div><div class="p-arrow">→</div>
-          <div class="p-node">Short-horizon optimisation</div><div class="p-arrow">→</div>
+          <div class="p-node">Human positions (YOLOv8 + Kalman filter)</div><div class="p-arrow">→</div>
+          <div class="p-node highlight">CBF safety constraints</div><div class="p-arrow">→</div>
+          <div class="p-node">MPC short-horizon optimisation</div><div class="p-arrow">→</div>
           <div class="p-node highlight2">Safe velocity commands</div>
         </div>
       </div>
@@ -291,6 +291,7 @@
           <div class="result-item"><div class="result-value">Active</div><div class="result-label">In development</div></div>
           <div class="result-item"><div class="result-value">ROS 2</div><div class="result-label">Simulation validation</div></div>
           <div class="result-item"><div class="result-value">MPC</div><div class="result-label">Constrained optimisation planner</div></div>
+           <div class="result-item"><div class="result-value">ECBF / QP</div><div class="result-label">Formal safety-critical control</div></div>
         </div>
       </div>
     </div>
