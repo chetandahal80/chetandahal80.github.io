@@ -1,852 +1,814 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chetan Dahal | Robotics Projects</title>
-  <style>
-    :root {
-      --bg: #111827;
-      --surface: #1e293b;
-      --surface2: #27374d;
-      --border: #374151;
-      --accent: #00d4aa;
-      --accent2: #0ea5e9;
-      --warn: #f59e0b;
-      --text: #e6edf3;
-      --muted: #8b949e;
-      --radius: 14px;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; }
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      background: rgba(13,17,23,0.9); backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 2.5rem; height: 58px;
-    }
-    .nav-logo { font-weight: 800; font-size: 1rem; color: var(--accent); }
-    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
-    .nav-right a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-    .nav-right a:hover { color: var(--text); }
-    .nav-btn {
-      background: var(--accent); color: #0d1117; padding: 0.38rem 1rem;
-      border-radius: 7px; font-size: 0.82rem; font-weight: 700; text-decoration: none; transition: background 0.2s;
-    }
-    .nav-btn:hover { background: #00f0c0; color: #0d1117 !important; }
-    /* ── HERO ── */
-    #hero {
-      min-height: 88vh; display: flex; align-items: center; justify-content: center;
-      text-align: center; padding: 100px 2rem 4rem;
-      background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(0,212,170,0.1) 0%, transparent 70%), var(--bg);
-    }
-    .hero-inner { max-width: 700px; }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.25);
-      color: var(--accent); padding: 0.35rem 1rem; border-radius: 999px;
-      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.6rem;
-    }
-    .dot-live { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 1.8s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
-    .hero-name {
-      font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 900; line-height: 1.05; margin-bottom: 0.6rem;
-      background: linear-gradient(135deg, var(--text) 40%, var(--accent));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .hero-sub { font-size: 1rem; color: var(--accent2); font-weight: 500; margin-bottom: 1.2rem; letter-spacing: 0.02em; }
-    .hero-desc { font-size: 1.05rem; color: var(--muted); max-width: 560px; margin: 0 auto 2.5rem; }
-    .hero-links { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; }
-    .pill {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.5rem 1.1rem; border-radius: 8px; font-size: 0.85rem;
-      font-weight: 600; text-decoration: none; transition: all 0.2s;
-    }
-    .pill-solid { background: var(--accent); color: #0d1117; }
-    .pill-solid:hover { background: #00f0c0; transform: translateY(-1px); }
-    .pill-outline { border: 1px solid var(--border); color: var(--text); }
-    .pill-outline:hover { border-color: var(--accent); color: var(--accent); }
-    /* ── SECTION SHELL ── */
-    .projects-wrapper { max-width: 1000px; margin: 0 auto; padding: 2rem 2rem 6rem; }
-    .projects-header { text-align: center; padding: 4rem 0 3rem; }
-    .projects-header h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; }
-    .projects-header h2 span { color: var(--accent); }
-    .projects-header p { color: var(--muted); margin-top: 0.6rem; font-size: 0.95rem; }
-    /* ── FILTER BAR ── */
-    .filter-bar { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 3.5rem; }
-    .filter-btn {
-      padding: 0.35rem 0.9rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600;
-      cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--muted);
-      transition: all 0.18s;
-    }
-    .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(0,212,170,0.07); }
-    /* ── CASE STUDY CARD ── */
-    .case-study {
-      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-      overflow: hidden; margin-bottom: 2rem; transition: border-color 0.2s;
-    }
-    .case-study:hover { border-color: rgba(0,212,170,0.35); }
-    .case-study[data-category="uav"] { border-top: 3px solid var(--accent); }
-    .case-study[data-category="ml"] { border-top: 3px solid var(--accent2); }
-    .case-study[data-category="control"] { border-top: 3px solid var(--warn); }
-    .case-study[data-category="embedded"] { border-top: 3px solid #a78bfa; }
-    .cs-header {
-      padding: 1.8rem 2rem 1.4rem;
-      display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;
-      cursor: pointer; user-select: none;
-    }
-    .cs-header-left { flex: 1; }
-    .cs-meta { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
-    .cs-num { font-size: 0.72rem; color: var(--muted); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-    .cs-cat-badge {
-      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
-      padding: 0.15rem 0.55rem; border-radius: 5px;
-    }
-    .cat-uav { background: rgba(0,212,170,0.12); color: var(--accent); }
-    .cat-ml { background: rgba(14,165,233,0.12); color: var(--accent2); }
-    .cat-control { background: rgba(245,158,11,0.12); color: var(--warn); }
-    .cat-embedded { background: rgba(167,139,250,0.12); color: #a78bfa; }
-    .cs-live-badge {
-      font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: 5px;
-      background: rgba(0,212,170,0.15); color: var(--accent); border: 1px solid rgba(0,212,170,0.3);
-      display: flex; align-items: center; gap: 0.35rem;
-    }
-    .cs-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.4rem; line-height: 1.3; }
-    .cs-tagline { font-size: 0.88rem; color: var(--muted); max-width: 600px; }
-    .cs-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
-    .cs-date { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
-    .cs-toggle {
-      width: 28px; height: 28px; border-radius: 7px; border: 1px solid var(--border);
-      background: var(--surface2); display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem; color: var(--muted); transition: all 0.2s; flex-shrink: 0;
-    }
-    .cs-header:hover .cs-toggle { border-color: var(--accent); color: var(--accent); }
-    .cs-tags-row { padding: 0 2rem 1.4rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .cs-tag {
-      padding: 0.22rem 0.7rem; border-radius: 5px; font-size: 0.75rem;
-      background: var(--surface2); border: 1px solid var(--border); color: var(--text);
-    }
-    /* Expandable body */
-    .cs-body { display: none; border-top: 1px solid var(--border); }
-    .cs-body.open { display: block; }
-    .cs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-    .cs-col { padding: 1.8rem 2rem; }
-    .cs-col:first-child { border-right: 1px solid var(--border); }
-    .cs-section-label {
-      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--muted); margin-bottom: 0.7rem;
-    }
-    .cs-text { font-size: 0.88rem; color: var(--muted); line-height: 1.8; }
-    .cs-text p { margin-bottom: 0.6rem; }
-    .cs-text p:last-child { margin-bottom: 0; }
-    /* Pipeline diagram */
-    .cs-pipeline { padding: 1.5rem 2rem; border-top: 1px solid var(--border); }
-    .pipeline-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1rem; }
-    .pipeline {
-      display: flex; align-items: center; flex-wrap: wrap; gap: 0.3rem;
-    }
-    .p-node {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 0.4rem 0.8rem;
-      font-size: 0.75rem; font-weight: 600; color: var(--text); white-space: nowrap;
-    }
-    .p-node.highlight { border-color: var(--accent); color: var(--accent); background: rgba(0,212,170,0.07); }
-    .p-node.highlight2 { border-color: var(--accent2); color: var(--accent2); background: rgba(14,165,233,0.07); }
-    .p-arrow { color: var(--muted); font-size: 0.8rem; padding: 0 0.1rem; }
-    /* Results metrics */
-    .cs-results { padding: 1.5rem 2rem; border-top: 1px solid var(--border); background: rgba(0,212,170,0.02); }
-    .results-grid { display: flex; flex-wrap: wrap; gap: 1rem; }
-    .result-item {
-      background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
-      padding: 0.9rem 1.2rem; min-width: 120px;
-    }
-    .result-value { font-size: 1.5rem; font-weight: 800; color: var(--accent); line-height: 1.1; }
-    .result-label { font-size: 0.73rem; color: var(--muted); margin-top: 0.25rem; }
-    /* Figure / image sections */
-    .cs-figure { padding: 1.5rem 2rem; border-top: 1px solid var(--border); }
-    .cs-figure img {
-      width: 100%; border-radius: 10px; display: block;
-      border: 1px solid var(--border);
-    }
-    /* Video sections */
-    .cs-video { padding: 1.5rem 2rem; border-top: 1px solid var(--border); }
-    .cs-video video {
-      width: 100%; border-radius: 10px; background: #000;
-      display: block; max-height: 420px; outline: none;
-    }
-    .video-hint {
-      font-size: 0.75rem; color: var(--muted); margin-top: 0.6rem;
-      padding: 0.6rem 0.9rem; background: var(--surface2);
-      border: 1px dashed var(--border); border-radius: 7px;
-    }
-    .video-hint code { color: var(--accent); font-family: monospace; }
-    .video-hint.hidden { display: none; }
-    /* ── FOOTER ── */
-    footer {
-      text-align: center; padding: 3rem 2rem;
-      border-top: 1px solid var(--border); color: var(--muted); font-size: 0.82rem;
-    }
-    .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--accent); }
-    @media (max-width: 640px) {
-      .cs-grid { grid-template-columns: 1fr; }
-      .cs-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
-      nav { padding: 0 1rem; }
-      .nav-right a:not(.nav-btn) { display: none; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chetan Dahal &middot; Robotics &amp; Controls</title>
+<meta name="description" content="Chetan Dahal: MS Electrical Engineering, UNLV Graduate Research Assistant. Autonomy, control theory and perception for robots that work in the real world.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230A1826'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%23FFB020' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%235FD4E0'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #EFF2F5;
+  --bg-raised: #FFFFFF;
+  --bg-sunken: #E4E9ED;
+  --grid-line: rgba(20,60,100,0.07);
+  --ink: #0F2540;
+  --ink-dim: #4C6178;
+  --ink-faint: #7E93A7;
+  --accent: #C97A00;
+  --accent-ink: #FFFFFF;
+  --cyan: #0E7C90;
+  --border: rgba(20,60,100,0.15);
+  --border-strong: rgba(20,60,100,0.32);
+  --shadow: 0 1px 2px rgba(15,37,64,0.06), 0 8px 24px rgba(15,37,64,0.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0A1826;
+    --bg-raised: #0F2338;
+    --bg-sunken: #081420;
+    --grid-line: rgba(120,170,210,0.08);
+    --ink: #E7EDF3;
+    --ink-dim: #9FB3C8;
+    --ink-faint: #6C87A0;
+    --accent: #FFB020;
+    --accent-ink: #1A1200;
+    --cyan: #5FD4E0;
+    --border: rgba(150,190,220,0.16);
+    --border-strong: rgba(150,190,220,0.3);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 30px rgba(0,0,0,0.35);
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background:
+    linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 32px 32px,
+    var(--bg);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: var(--accent-ink); }
+a { color: var(--cyan); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--accent); }
+h1, h2, h3, h4 { font-family: "Fraunces", Georgia, "Times New Roman", serif; font-weight: 600; color: var(--ink); text-wrap: balance; margin: 0; }
+code, .mono, .num, .tag, .metric-value, .eq { font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace; font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
+.wrap-wide { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+/* corner-bracket plate */
+.plate { position: relative; background: var(--bg-raised); border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 3px; }
+.plate::before, .plate::after { content: ""; position: absolute; width: 14px; height: 14px; }
+.plate::before { top: -1px; left: -1px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
+.plate::after { bottom: -1px; right: -1px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+.plate-label { position: absolute; top: -11px; left: 24px; background: var(--bg-raised); padding: 0 8px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+
+/* top bar */
+.topbar { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--border); padding: 14px 0; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); }
+.topbar .wrap-wide { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.brand { display: flex; align-items: baseline; gap: 8px; font-family: "IBM Plex Mono", monospace; font-size: 13.5px; letter-spacing: 0.04em; color: var(--ink); font-weight: 600; }
+.brand .dot { color: var(--accent); }
+.topnav { display: flex; gap: 22px; font-family: "IBM Plex Mono", monospace; font-size: 12.5px; letter-spacing: 0.03em; align-items: center; }
+.topnav a { color: var(--ink-dim); }
+.topnav a:hover { color: var(--accent); }
+.topnav .icon-link { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border-strong); padding: 6px 12px; border-radius: 2px; color: var(--ink); }
+.topnav .icon-link:hover { border-color: var(--accent); color: var(--accent); }
+
+/* hero */
+.hero { padding: 68px 0 30px; }
+.hero-kicker { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.hero-kicker::before { content: ""; width: 20px; height: 1px; background: var(--accent); }
+.hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.06; max-width: 16ch; }
+.hero h1 .accent-word { color: var(--accent); }
+.hero .lede { margin-top: 20px; max-width: 62ch; font-size: 1.14rem; color: var(--ink-dim); }
+.hero .lede b { color: var(--ink); font-weight: 600; }
+.btn-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 30px; }
+.btn { font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: 0.02em; padding: 12px 20px; border-radius: 2px; border: 1px solid var(--border-strong); color: var(--ink); display: inline-flex; align-items: center; gap: 8px; transition: border-color .15s ease, color .15s ease, background .15s ease; cursor: pointer; background: transparent; }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primary:hover { opacity: .9; color: var(--accent-ink); }
+
+/* quick facts strip */
+.facts { margin-top: 46px; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+.fact { background: var(--bg-raised); padding: 20px 22px; }
+.fact-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 8px; font-family: "IBM Plex Mono", monospace; }
+.fact-value { font-size: 1rem; color: var(--ink); font-weight: 600; line-height: 1.35; }
+.fact-value span { color: var(--ink-dim); font-weight: 400; display: block; font-size: 13px; margin-top: 2px; }
+
+section { padding: 72px 0; }
+section.tight { padding: 40px 0; }
+.eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px; }
+.section-head { margin-bottom: 34px; max-width: 68ch; }
+.section-head h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); margin-bottom: 12px; }
+.section-head p { color: var(--ink-dim); font-size: 1.02rem; margin: 0; }
+p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+.prose { max-width: 74ch; color: var(--ink-dim); }
+.prose strong { color: var(--ink); font-weight: 600; }
+hr.rule { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+/* timeline / record rows */
+.record-group { margin-bottom: 30px; }
+.record-group:last-child { margin-bottom: 0; }
+.record-group-title { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--cyan); margin-bottom: 14px; }
+.record { display: grid; grid-template-columns: 190px 1fr; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+.record:last-child { border-bottom: none; }
+.record-when { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--ink-faint); padding-top: 3px; }
+.record-title { font-size: 1.04rem; font-weight: 600; color: var(--ink); font-family: "IBM Plex Sans"; margin-bottom: 2px; }
+.record-org { font-size: 13.5px; color: var(--ink-dim); font-style: italic; margin-bottom: 10px; }
+.record ul { margin: 0; padding-left: 18px; color: var(--ink-dim); font-size: 14px; line-height: 1.7; }
+.record ul li::marker { color: var(--accent); }
+@media (max-width: 620px) { .record { grid-template-columns: 1fr; gap: 6px; } }
+
+/* education plates */
+.edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 16px; }
+.edu-card { border: 1px solid var(--border); border-left: 3px solid var(--cyan); background: var(--bg-raised); border-radius: 2px; padding: 20px 22px; }
+.edu-card .when { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-faint); margin-bottom: 8px; }
+.edu-card h4 { font-size: 1.02rem; margin-bottom: 3px; font-family: "IBM Plex Sans"; font-weight: 600; }
+.edu-card .degree { font-size: 13.5px; color: var(--cyan); font-style: italic; margin-bottom: 4px; }
+.edu-card .place { font-size: 13px; color: var(--ink-faint); }
+
+/* skills */
+.skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+.skill-cat { background: var(--bg-raised); padding: 20px 22px; }
+.skill-cat-name { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; font-family: "IBM Plex Mono", monospace; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: "IBM Plex Mono", monospace; font-size: 12px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border-strong); color: var(--ink-dim); background: var(--bg-sunken); }
+
+/* awards */
+.award-list { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+.award-row { background: var(--bg-raised); padding: 16px 22px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: baseline; }
+.award-row h4 { font-size: .98rem; font-weight: 600; font-family: "IBM Plex Sans"; margin-bottom: 3px; }
+.award-row p { margin: 0; font-size: 13px; color: var(--ink-faint); }
+.award-row .yr { font-family: "IBM Plex Mono", monospace; color: var(--accent); font-size: 13px; }
+
+/* filters */
+.filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px; }
+.filter-btn { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; padding: 9px 16px; border-radius: 20px; border: 1px solid var(--border-strong); background: transparent; color: var(--ink-dim); cursor: pointer; transition: all .15s ease; }
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+.filter-btn.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+/* project cards */
+.proj-list { display: flex; flex-direction: column; gap: 18px; }
+.proj-card { border: 1px solid var(--border); border-radius: 3px; background: var(--bg-raised); overflow: hidden; transition: border-color .15s ease; }
+.proj-card[data-active="true"] { border-color: var(--accent); }
+.proj-head { padding: 24px clamp(18px,3vw,30px); cursor: pointer; display: block; }
+.proj-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.proj-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.proj-num { font-family: "IBM Plex Mono", monospace; color: var(--ink-faint); font-size: 13px; }
+.proj-cat { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 9px; border-radius: 3px; background: var(--bg-sunken); color: var(--cyan); border: 1px solid var(--border); }
+.proj-status { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); display: inline-flex; align-items: center; gap: 5px; }
+.proj-status::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.proj-when { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-faint); white-space: nowrap; padding-top: 2px; }
+.proj-title { font-size: 1.22rem; font-weight: 600; font-family: "IBM Plex Sans"; margin-bottom: 8px; color: var(--ink); }
+.proj-summary { font-size: 14.5px; color: var(--ink-dim); max-width: 68ch; margin-bottom: 14px; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.proj-tag { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; padding: 4px 10px; border-radius: 20px; background: var(--bg-sunken); border: 1px solid var(--border); color: var(--ink-dim); }
+.proj-toggle { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-family: "IBM Plex Mono", monospace; color: var(--ink-dim); font-size: 15px; transition: all .15s ease; }
+.proj-card[data-active="true"] .proj-toggle { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+.proj-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+.proj-card[data-active="true"] .proj-body { max-height: 4000px; }
+.proj-body-inner { padding: 4px clamp(18px,3vw,30px) 30px; border-top: 1px solid var(--border); margin-top: 2px; }
+.proj-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin: 22px 0; }
+@media (max-width: 700px) { .proj-cols { grid-template-columns: 1fr; } }
+.proj-col-h { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px; font-family: "IBM Plex Mono", monospace; }
+.proj-col p { font-size: 14px; color: var(--ink-dim); }
+
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 18px 0; padding: 18px; background: var(--bg-sunken); border-radius: 2px; border: 1px solid var(--border); }
+.flow-step { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink); background: var(--bg-raised); border: 1px solid var(--border-strong); padding: 8px 13px; border-radius: 2px; line-height: 1.4; }
+.flow-arrow { color: var(--accent); font-size: 14px; }
+
+.metric-mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; margin: 18px 0; }
+.metric-mini { background: var(--bg-raised); padding: 16px 18px; }
+.metric-mini .v { font-family: "IBM Plex Mono", monospace; font-size: 1.25rem; font-weight: 600; color: var(--accent); line-height: 1.1; }
+.metric-mini .l { font-size: 11.5px; color: var(--ink-faint); margin-top: 6px; line-height: 1.4; }
+
+.proj-media { margin: 18px 0; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; background: var(--bg-sunken); }
+.proj-media video { display: block; width: 100%; height: auto; background: #000; }
+.proj-media-cap { padding: 9px 14px; font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-faint); border-top: 1px solid var(--border); }
+
+/* footer */
+footer { border-top: 1px solid var(--border); padding: 44px 0 60px; }
+footer .wrap-wide { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+footer .f-links { display: flex; gap: 20px; font-family: "IBM Plex Mono", monospace; font-size: 13px; }
+footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mono", monospace; margin: 0; }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+</style>
 </head>
 <body>
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">Chetan Dahal</div>
-  <div class="nav-right">
-    <a href="mailto:dahalc1@unlv.nevada.edu">dahalc1@unlv.nevada.edu</a>
-    <a href="https://github.com/chetandahal80" target="_blank">GitHub</a>
-    <a href="https://linkedin.com/in/chetandahal" target="_blank">LinkedIn</a>
+
+<div class="topbar">
+  <div class="wrap-wide">
+    <div class="brand"><span class="dot">&#9679;</span> Chetan&nbsp;Dahal</div>
+    <nav class="topnav">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="mailto:dahalc1@unlv.nevada.edu" class="icon-link">Contact</a>
+    </nav>
   </div>
-</nav>
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">
-      <span class="dot-live"></span>
+</div>
+
+<header class="hero">
+  <div class="wrap-wide">
+    <h1>Autonomous robots that work outside the lab and the control theory that makes them <span class="accent-word">provably</span> safe to be around.</h1>
+    <p class="lede">I'm an MS Electrical Engineering student and Graduate Research Assistant at UNLV, building UAVs, mobile robots and embedded perception systems, from formally certified motion planning to onboard SLAM on hardware I assemble myself. <b>10 projects below</b>, each with the actual problem, the approach and the results.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="#projects">View projects &darr;</a>
+      <a class="btn" href="mailto:dahalc1@unlv.nevada.edu">Email me</a>
+      <a class="btn" href="https://linkedin.com/in/chetandahal" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/chetandahal80" target="_blank" rel="noopener">GitHub</a>
     </div>
-    <h1 class="hero-name">Chetan Dahal</h1>
-    <p class="hero-sub">MS Electrical Engineering · UNLV Graduate Research Assistant</p>
-    <p class="hero-desc">
-      I build autonomous robots that work in the real world: UAVs, mobile robots and
-      embedded AI systems. Below is a detailed look at the projects I've designed and built.
-    </p>
-    <div class="hero-links">
-      <a href="#projects" class="pill pill-solid">Explore Projects ↓</a>
-      <a href="https://github.com/chetandahal80" target="_blank" class="pill pill-outline">GitHub</a>
-      <a href="https://linkedin.com/in/chetandahal" target="_blank" class="pill pill-outline">LinkedIn</a>
+
+    <div class="facts">
+      <div class="fact"><div class="fact-label">Current role</div><div class="fact-value">Graduate Research Assistant<span>University of Nevada, Las Vegas &middot; Jan 2025&ndash;present</span></div></div>
+      <div class="fact"><div class="fact-label">Research focus</div><div class="fact-value">Autonomy, control theory &amp; perception<span>UAV &amp; mobile robot systems, sensor fusion</span></div></div>
+      <div class="fact"><div class="fact-label">Education</div><div class="fact-value">MSc Electrical Eng. (UNLV)<span>BSc Mechanical Eng., Tribhuvan University</span></div></div>
+      <div class="fact"><div class="fact-label">Contact</div><div class="fact-value">dahalc1@unlv.nevada.edu<span>702&#8209;813&#8209;8825</span></div></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="plate" style="padding: 38px clamp(20px,4vw,44px);">
+      <span class="plate-label">About</span>
+      <div class="prose">
+        <p>I work at the intersection of control theory and applied robotics: the kind of projects where a formal guarantee from a proof has to survive contact with real sensor noise, real hardware vibration and real people moving unpredictably nearby. At UNLV I'm building a multi-modal sensing pipeline of hyperspectral imagery and LiDAR point clouds, flown on both custom-built and commercial UAVs, to estimate wildfire fuel structure and moisture over wildfire-prone terrain, in collaboration with the Desert Research Institute.</p>
+        <p>I also work on independent projects like deriving a safety constraint from first principles for a mobile robot, assembling and tuning the quadrotor it flies on and running the tests that check whether the safety guarantee actually holds before calling it done. <strong>Before the MS</strong>, I spent a year and a half running factory operations for a 15-person production team in Nepal after finishing a Mechanical Engineering degree at Tribhuvan University. That's part of why I care as much about whether a system actually ships as I do about whether the math is right.</p>
+      </div>
     </div>
   </div>
 </section>
-<!-- PROJECTS -->
-<div class="projects-wrapper" id="projects">
-  <div class="filter-bar">
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="uav">UAV / Aerial</button>
-    <button class="filter-btn" data-filter="control">Control</button>
-    <button class="filter-btn" data-filter="ml">Deep Learning</button>
-    <button class="filter-btn" data-filter="embedded">Embedded / Edge</button>
-  </div>
-<!-- ── PROJECT 1 ── -->
-  <div class="case-study" data-category="control">
-    <div class="cs-header" onclick="toggleCS(this)">
-      <div class="cs-header-left">
-        <div class="cs-meta">
-          <span class="cs-num">01</span>
-          <span class="cs-cat-badge cat-control">Planning &amp; Control</span>
-          <span class="cs-live-badge"><span class="dot-live"></span> Active</span>
-        </div>
-        <div class="cs-title">Human-Aware Trajectory Planning with Formally Safe MPC</div>
-        <div class="cs-tagline">Replacing heuristic safety constraints in an MPC motion planner with Control Barrier Functions to give a wheeled mobile robot formally certified, collision-free navigation around moving humans.</div>
-      </div>
-      <div class="cs-header-right">
-        <div class="cs-date">Jun 2026 to Present</div>
-        <div class="cs-toggle">＋</div>
-      </div>
+
+<section id="experience">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="eyebrow">Background</div>
+      <h2>Experience &amp; education</h2>
+      <p>Research, teaching and a year and a half running a factory floor before returning to graduate school.</p>
     </div>
-    <div class="cs-tags-row">
-      <span class="cs-tag">ROS 2</span><span class="cs-tag">MPC</span><span class="cs-tag">CBF</span>
-      <span class="cs-tag">Motion Planning</span><span class="cs-tag">Human-Robot Interaction</span><span class="cs-tag">Python / C++</span>
-    </div>
-    <div class="cs-body">
-      <div class="cs-grid">
-        <div class="cs-col">
-          <div class="cs-section-label">The Challenge</div>
-          <div class="cs-text">
-            <p>Most MPC planners enforce safety around moving humans through heuristic, soft-constraint penalties. These give no formal guarantee that the robot will actually avoid collisions, they only discourage close passes through the cost function.</p>
-            <p>The goal: replace those heuristics with Control Barrier Functions (CBFs) that provide mathematically certified collision-avoidance guarantees, a provably stronger alternative , while keeping the planner real-time and smooth enough for shared human-robot environments.</p>
-          </div>
-        </div>
-        <div class="cs-col">
-          <div class="cs-section-label">My Approach</div>
-          <div class="cs-text">
-            <p>Developing an MPC-based motion planning pipeline for a wheeled mobile robot, with real-time human state estimation via YOLOv8 detection and Kalman filter tracking feeding directly into the planner's safety layer.</p>
-            <p> Integrating discrete-time Control Barrier Function (DCBF) constraints into the MPC receding horizon formulation, extending formal safety guarantees to dynamic human obstacles using Kalman-predicted trajectories. Implementing and validating the CBF-augmented MPC planner in ROS 2 simulation, targeting smooth, safe navigation around moving humans.</p>
+
+    <div class="plate" style="padding: 30px clamp(18px,3vw,34px); margin-bottom: 20px;">
+      <span class="plate-label">Experience</span>
+      <div class="record-group">
+        <div class="record-group-title">Research</div>
+        <div class="record">
+          <div class="record-when">Jan 2025 &ndash; Present</div>
+          <div>
+            <div class="record-title">Graduate Research Assistant</div>
+            <div class="record-org">University of Nevada, Las Vegas &middot; Las Vegas, Nevada</div>
+            <ul>
+              <li>Integrated a LiDAR and hyperspectral sensor (Resonon Pika IR-L) on custom-built aerial robots for field data collection over wildfire-prone vegetation, including controlled-burn sites in collaboration with the Desert Research Institute (DRI)</li>
+              <li>Developed ROS 2 (Humble) software in Python spanning perception, state estimation and system integration on the Alta X UAV and other custom-built aerial platforms</li>
+              <li>Deployed real-time FAST-LIO2 LiDAR-inertial SLAM onboard an NVIDIA Jetson Orin Nano for onboard state estimation and 3D mapping</li>
+              <li>Transferred the full onboard SLAM system from an aerial platform to a legged (quadruped) robot and revalidated it in the field</li>
+              <li>Architected a ROS 2 lifecycle node sequencing SLAM startup, rosbag2 recording, deterministic shutdown and map serialization</li>
+              <li>Resolved cascading build failures across colcon/CMake and rclcpp API breaks (C++14/17 conflicts, subscription callback signature changes)</li>
+              <li>Debugged a semaphore-level driver defect that was silently halving the IMU's effective publish rate on LiDAR packets (&sim;51&thinsp;Hz vs. a 200&thinsp;Hz spec)</li>
+              <li>Integrated LiDAR, INS/GNSS, RGB-D cameras and radios with PX4 flight control and a Linux companion computer</li>
+              <li>Diagnosed vibration corrupting the EKF via FFT/Welch power-spectral-density analysis of system logs and specified vibration isolators to &le;&thinsp;&minus;15&thinsp;dB attenuation in the 60&ndash;80&thinsp;Hz band</li>
+              <li>Added an independent raw-IMU logging path over RS-232 via a soldered USB-to-RS232 adapter, leaving the primary INS&ndash;flight-computer link intact</li>
+            </ul>
           </div>
         </div>
       </div>
-      <div class="cs-pipeline">
-        <div class="pipeline-label">Planning Pipeline</div>
-        <div class="pipeline">
-          <div class="p-node">Human positions (YOLOv8 + Kalman filter)</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">CBF safety constraints</div><div class="p-arrow">→</div>
-          <div class="p-node">MPC short-horizon optimisation</div><div class="p-arrow">→</div>
-          <div class="p-node highlight2">Safe velocity commands</div>
-        </div>
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Current Status</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">Active</div><div class="result-label">In development</div></div>
-          <div class="result-item"><div class="result-value">ROS 2</div><div class="result-label">Simulation validation</div></div>
-          <div class="result-item"><div class="result-value">MPC</div><div class="result-label">Constrained optimisation planner</div></div>
-           <div class="result-item"><div class="result-value">ECBF / QP</div><div class="result-label">Formal safety-critical control</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- ── PROJECT 2 ── -->
-  <div class="case-study" data-category="control">
-    <div class="cs-header" onclick="toggleCS(this)">
-      <div class="cs-header-left">
-        <div class="cs-meta">
-          <span class="cs-num">02</span>
-          <span class="cs-cat-badge cat-control">Planning &amp; Control</span>
-        </div>
-        <div class="cs-title">CR3BP Spacecraft Control at Earth-Moon L2</div>
-        <div class="cs-tagline">Stabilising a spacecraft at an unstable Lagrange point under persistent disturbances, comparing pole placement, LQR and NSGA-II multi-objective optimisation to show that how you tune Q/R matters as much as which controller you pick.</div>
-      </div>
-      <div class="cs-header-right">
-        <div class="cs-date">May 2026</div>
-        <div class="cs-toggle">＋</div>
-      </div>
-    </div>
-    <div class="cs-tags-row">
-      <span class="cs-tag">MATLAB</span><span class="cs-tag">LQR</span><span class="cs-tag">Pole Placement</span>
-      <span class="cs-tag">NSGA-II</span><span class="cs-tag">Pareto Front</span><span class="cs-tag">Servo-Compensator</span><span class="cs-tag">CR3BP</span>
-    </div>
-    <div class="cs-body">
-      <div class="cs-grid">
-        <div class="cs-col">
-          <div class="cs-section-label">The Challenge</div>
-          <div class="cs-text">
-            <p>The Earth-Moon L2 Lagrange point is an unstable equilibrium: a spacecraft placed there will drift away without active control. The open-loop dynamics have an unstable eigenvalue at +2.1587, so the controller must first stabilise that instability.</p>
-            <p>On top of that, persistent sinusoidal disturbances act on the system at 1 rad/s. The controller must simultaneously stabilise the unstable dynamics <em>and</em> reject these disturbances asymptotically. To enforce rejection via the Internal Model Principle, a servo-compensator was augmented to the plant, bringing the full system to 10th order.</p>
-            <p>The deeper question this project asks: <strong style="color:var(--text)">is Bryson's Method actually a good way to tune an LQR controller for mission-relevant performance?</strong> The answer, it turns out, is no. The project demonstrates this systematically.</p>
+
+      <div class="record-group">
+        <div class="record-group-title">Teaching</div>
+        <div class="record">
+          <div class="record-when">Jan 2025 &ndash; Apr 2025</div>
+          <div>
+            <div class="record-title">Graduate Teaching Assistant</div>
+            <div class="record-org">University of Nevada, Las Vegas &middot; Las Vegas, Nevada</div>
+            <ul><li>Served as GTA, independently conducting office hours and grading for 90 students; assisted with circuit analysis and logic design instruction</li></ul>
           </div>
         </div>
-        <div class="cs-col">
-          <div class="cs-section-label">My Approach</div>
-          <div class="cs-text">
-            <p>Implemented four control architectures in order of increasing sophistication. <strong style="color:var(--text)">Pole placement</strong> gives two isolated operating points but no understanding of the surrounding design space. <strong style="color:var(--text)">LQR with Bryson's Method</strong> gives one physically motivated point, but no way to know whether it is a good choice relative to other LQR designs.</p>
-            <p><strong style="color:var(--text)">LQR Pareto front (alpha-sweep)</strong> reveals the complete tradeoff curve. Bryson's point sits at the high-effort end. The knee point at α=0.0077 achieves comparable settling with 73% less effort. Finally, <strong style="color:var(--text)">NSGA-II</strong> searches all 12 Q/R diagonal entries independently, finding controllers that alpha-scaling can never reach. A Luenberger observer handles state estimation throughout.</p>
+        <div class="record">
+          <div class="record-when">Oct 2022 &ndash; Feb 2023</div>
+          <div>
+            <div class="record-title">Lecturer and Lab Instructor</div>
+            <div class="record-org">Nepal College of Information Technology, Pokhara University &middot; Lalitpur, Nepal</div>
+            <ul>
+              <li>Delivered hands-on instruction on machine tools and fabrication processes to undergraduate students</li>
+              <li>Guided students in technical drawing interpretation and product fabrication</li>
+            </ul>
           </div>
         </div>
       </div>
-      <div class="cs-pipeline">
-        <div class="pipeline-label">Control Architecture</div>
-        <div class="pipeline">
-          <div class="p-node">CR3BP Plant (4th order)</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">+ Servo-Compensator</div><div class="p-arrow">→</div>
-          <div class="p-node">10th-order System</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Luenberger Observer</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">LQR / NSGA-II Controller</div><div class="p-arrow">→</div>
-          <div class="p-node highlight2">Disturbance Rejection + Stabilisation</div>
+
+      <div class="record-group">
+        <div class="record-group-title">Industry</div>
+        <div class="record">
+          <div class="record-when">Mar 2023 &ndash; Aug 2024</div>
+          <div>
+            <div class="record-title">Factory Operation Head &amp; Mechanical Design Engineer</div>
+            <div class="record-org">Target Furniture Pvt. Ltd. &middot; Lalitpur, Nepal</div>
+            <ul>
+              <li>Led end-to-end factory operations for a production team of 15, coordinating planning, execution and delivery</li>
+              <li>Established production workflows and quality-control procedures, improving consistency and reducing rework</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="cs-figure">
-        <div class="cs-section-label">Pareto Front: NSGA-II vs LQR Alpha-Sweep</div>
-        <img src="images/cr3bp-pareto.png" alt="NSGA-II vs LQR Pareto Front" loading="lazy"
-             onerror="this.parentElement.style.display='none'">
+    </div>
+
+    <div class="edu-grid" style="margin-bottom: 20px;">
+      <div class="edu-card">
+        <div class="when">Jan 2025 &ndash; Dec 2026</div>
+        <h4>University of Nevada, Las Vegas</h4>
+        <div class="degree">MSc in Electrical Engineering</div>
+        <div class="place">Las Vegas, Nevada</div>
+        <div class="place" style="margin-top:6px;">Coursework: optimal/modern control, real-time embedded systems, deep learning, computer vision</div>
       </div>
-      <div class="cs-video">
-        <div class="cs-section-label">Demo Video</div>
-        <video controls preload="none" oncanplay="this.nextElementSibling.classList.add('hidden')">
-          <source src="videos/cr3bp-spacecraft-control.mp4" type="video/mp4">
-        </video>
+      <div class="edu-card">
+        <div class="when">Nov 2016 &ndash; Oct 2021</div>
+        <h4>Pulchowk Engineering Campus, Tribhuvan University</h4>
+        <div class="degree">Bachelor's in Mechanical Engineering</div>
+        <div class="place">Lalitpur, Nepal</div>
+        <div class="place" style="margin-top:6px;">Coursework: control systems, kinematics and dynamics, probability and statistics, C programming</div>
       </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Results: All Controllers Compared</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">1.8s</div><div class="result-label">NSGA-II settling time (knee)</div></div>
-          <div class="result-item"><div class="result-value">3.5</div><div class="result-label">NSGA-II RMS effort (knee)</div></div>
-          <div class="result-item"><div class="result-value">73%</div><div class="result-label">Less effort vs Bryson's Method</div></div>
-          <div class="result-item"><div class="result-value">12D</div><div class="result-label">Q/R space searched by NSGA-II vs 1D</div></div>
-          <div class="result-item"><div class="result-value">2.6 min</div><div class="result-label">10,000 LQR designs evaluated</div></div>
-          <div class="result-item"><div class="result-value">10th</div><div class="result-label">Order augmented system</div></div>
-        </div>
+    </div>
+
+    <div class="skill-grid" style="margin-bottom: 20px;">
+      <div class="skill-cat"><div class="skill-cat-name">Programming</div><div class="chip-row"><span class="chip">Python</span><span class="chip">C / C++</span><span class="chip">MATLAB</span><span class="chip">Git</span></div></div>
+      <div class="skill-cat"><div class="skill-cat-name">Robotics Middleware</div><div class="chip-row"><span class="chip">ROS 2 (Humble)</span><span class="chip">ROS 1</span><span class="chip">Lifecycle nodes</span><span class="chip">tf2</span><span class="chip">rosbag2</span><span class="chip">CycloneDDS</span><span class="chip">colcon / CMake</span><span class="chip">Gazebo</span><span class="chip">RViz2</span><span class="chip">PX4 SITL</span></div></div>
+      <div class="skill-cat"><div class="skill-cat-name">Planning &amp; Control</div><div class="chip-row"><span class="chip">MPC</span><span class="chip">Control Barrier Functions</span><span class="chip">Real-time QP formulation</span><span class="chip">A* global planning</span><span class="chip">DWA local planning</span><span class="chip">SLAM-based navigation</span><span class="chip">PID &amp; LQR tuning</span></div></div>
+      <div class="skill-cat"><div class="skill-cat-name">Perception &amp; Estimation</div><div class="chip-row"><span class="chip">PyTorch</span><span class="chip">OpenCV</span><span class="chip">YOLOv8</span><span class="chip">RGB-D 3D localization</span><span class="chip">Point-cloud registration</span><span class="chip">Multi-target tracking</span><span class="chip">EKF / Kalman filtering</span><span class="chip">Sensor fusion</span><span class="chip">LiDAR-inertial odometry (FAST-LIO2)</span><span class="chip">Coordinate-frame transforms</span></div></div>
+      <div class="skill-cat"><div class="skill-cat-name">Hardware &amp; Platforms</div><div class="chip-row"><span class="chip">Jetson Orin Nano</span><span class="chip">Raspberry Pi</span><span class="chip">STM32</span><span class="chip">MSP432</span><span class="chip">Livox LiDAR</span><span class="chip">SBG INS / GNSS</span><span class="chip">RGB-D cameras</span><span class="chip">PX4 / Cube Orange</span><span class="chip">MEMS IMUs</span><span class="chip">UART / RS-232 / I2C / SPI</span></div></div>
+      <div class="skill-cat"><div class="skill-cat-name">Design &amp; Simulation Tools</div><div class="chip-row"><span class="chip">SOLIDWORKS</span><span class="chip">AutoCAD</span><span class="chip">ANSYS</span><span class="chip">LTSpice</span><span class="chip">Linux (Ubuntu, ARM64)</span></div></div>
+    </div>
+
+    <div>
+      <div class="eyebrow" style="margin-bottom: 14px;">Selected honors &amp; awards</div>
+      <div class="award-list">
+        <div class="award-row"><div><h4>Kenneth R. Sites Electrical and Computer Engineering Scholarship</h4><p>Department of Electrical and Computer Engineering, University of Nevada, Las Vegas</p></div><div class="yr">2026</div></div>
+        <div class="award-row"><div><h4>Departmental Gold Medal</h4><p>Department of Mechanical and Aerospace Engineering, Tribhuvan University</p></div><div class="yr">2022</div></div>
+        <div class="award-row"><div><h4>Nepal Engineers&rsquo; Association (NEA) Bagmati Innovation Support</h4><p>Awarded for final-year undergraduate research project</p></div><div class="yr">2022</div></div>
+        <div class="award-row"><div><h4>NCELL Scholarship Award for Mechanical Programme Topper</h4><p>Awarded to the batch topper</p></div><div class="yr">2021</div></div>
       </div>
     </div>
   </div>
-<!-- ── PROJECT 3 ── -->
-  <div class="case-study" data-category="uav">
-    <div class="cs-header" onclick="toggleCS(this)">
-      <div class="cs-header-left">
-        <div class="cs-meta">
-          <span class="cs-num">03</span>
-          <span class="cs-cat-badge cat-uav">UAV / Aerial</span>
-        </div>
-        <div class="cs-title">Autonomous UAV for Radiation Mapping in GPS-Denied Environments</div>
-        <div class="cs-tagline">End-to-end autonomy pipeline for mapping radiation in indoor, GPS-denied spaces using SLAM and ROS.</div>
-      </div>
-      <div class="cs-header-right">
-        <div class="cs-date">Aug 2025</div>
-        <div class="cs-toggle">＋</div>
-      </div>
+</section>
+
+<section id="projects">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="eyebrow">Independent &amp; academic research</div>
+      <h2>Projects</h2>
+      <p>Ten projects spanning safety-critical control, UAV autonomy, perception and embedded ML. Click any card for the full problem statement, approach and results.</p>
     </div>
-    <div class="cs-tags-row">
-      <span class="cs-tag">ROS</span><span class="cs-tag">PX4 SITL</span><span class="cs-tag">Gazebo</span>
-      <span class="cs-tag">Hector SLAM</span><span class="cs-tag">RViz</span><span class="cs-tag">Grid Maps</span>
+
+    <div class="filters" role="group" aria-label="Filter projects by category">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="uav">UAV / Aerial</button>
+      <button class="filter-btn" data-filter="control">Control</button>
+      <button class="filter-btn" data-filter="deep-learning">Deep Learning</button>
+      <button class="filter-btn" data-filter="perception">Perception</button>
+      <button class="filter-btn" data-filter="embedded">Embedded / Edge</button>
     </div>
-    <div class="cs-body">
-      <div class="cs-grid">
-        <div class="cs-col">
-          <div class="cs-section-label">The Challenge</div>
-          <div class="cs-text">
-            <p>In nuclear facilities or post-disaster environments, humans cannot safely enter radiation-contaminated spaces. A UAV could map these environments, but GPS is unavailable indoors and radiation sensors must be fused with spatial data to produce a meaningful map, not just point readings.</p>
-            <p>The hard parts: making the UAV localize itself without GPS, avoiding obstacles in cluttered indoor spaces, and overlaying sensor data on a 2D grid map in real time.</p>
+
+    <div class="proj-list" id="proj-list">
+
+      <!-- 01 -->
+      <article class="proj-card" data-cat="control" data-active="false">
+        <div class="proj-head">
+          <div class="proj-top">
+            <div>
+              <div class="proj-meta"><span class="proj-num">01</span><span class="proj-cat">Planning &amp; Control</span><span class="proj-status">Active</span><span class="proj-when">Jun 2026 &ndash; Present</span></div>
+              <div class="proj-title">Human-Aware Trajectory Planning with Formally Safe MPC</div>
+              <div class="proj-summary">Replacing heuristic safety constraints in an MPC motion planner with Control Barrier Functions to give a wheeled mobile robot formally certified, collision-free navigation around moving humans.</div>
+              <div class="proj-tags"><span class="proj-tag">ROS 2</span><span class="proj-tag">MPC</span><span class="proj-tag">CBF</span><span class="proj-tag">Motion Planning</span><span class="proj-tag">Human-Robot Interaction</span><span class="proj-tag">Python / C++</span></div>
+            </div>
+            <div class="proj-toggle">+</div>
           </div>
         </div>
-        <div class="cs-col">
-          <div class="cs-section-label">My Approach</div>
-          <div class="cs-text">
-            <p>Built the autonomy stack in ROS, integrating PX4 SITL with Gazebo for realistic simulation of flight control, sensors, and autonomy logic. Hector SLAM provides GPS-free localisation, maintaining a 2D occupancy grid that feeds the obstacle avoidance layer.</p>
-            <p>Radiation readings are georeferenced against the SLAM map and rendered as a colour-coded 2D grid map in RViz, updated live as the UAV flies. Addressed sim-to-real challenges including TF frame consistency, sensor noise, and timestamp alignment across the ROS graph.</p>
+        <div class="proj-body"><div class="proj-body-inner">
+          <div class="proj-cols">
+            <div class="proj-col"><div class="proj-col-h">The challenge</div>
+              <p>Most MPC planners enforce safety around moving humans through heuristic, soft-constraint penalties. These give no formal guarantee that the robot will actually avoid collisions; they only discourage close passes through the cost function.</p>
+              <p>The goal: replace those heuristics with Control Barrier Functions (CBFs) that provide mathematically certified collision-avoidance guarantees, a provably stronger alternative, while keeping the planner real-time and smooth enough for shared human-robot environments.</p>
+            </div>
+            <div class="proj-col"><div class="proj-col-h">My approach</div>
+              <p>Developing an MPC-based motion planning pipeline for a wheeled mobile robot, with real-time human state estimation via YOLOv8 detection and Kalman filter tracking feeding directly into the planner's safety layer.</p>
+              <p>Integrating discrete-time Control Barrier Function (DCBF) constraints into the MPC receding horizon formulation, extending formal safety guarantees to dynamic human obstacles using Kalman-predicted trajectories. Implemented and validated in ROS 2 simulation. A DPP-reformulated QP solver now runs the full pipeline at 17&times; real time and a 30-seed statistical sweep plus a deliberately non-straight-line human motion stress test have been used to actively look for and quantify where the safety guarantee is weakest.</p>
+            </div>
+          </div>
+          <div class="flow">
+            <div class="flow-step">Human positions<br>(YOLOv8 + Kalman filter)</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">CBF safety<br>constraints</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">MPC short-horizon<br>optimisation</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Safe velocity<br>commands</div>
+          </div>
+          <div class="metric-mini-grid">
+            <div class="metric-mini"><div class="v">Active</div><div class="l">In development</div></div>
+            <div class="metric-mini"><div class="v">ROS 2</div><div class="l">Simulation validation</div></div>
+            <div class="metric-mini"><div class="v">MPC</div><div class="l">Constrained optimisation planner</div></div>
+            <div class="metric-mini"><div class="v">DCBF / QP</div><div class="l">Formal safety-critical control</div></div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- 02 -->
+      <article class="proj-card" data-cat="control" data-active="false">
+        <div class="proj-head">
+          <div class="proj-top">
+            <div>
+              <div class="proj-meta"><span class="proj-num">02</span><span class="proj-cat">Planning &amp; Control</span><span class="proj-when">May 2026</span></div>
+              <div class="proj-title">CR3BP Spacecraft Control at Earth-Moon L2</div>
+              <div class="proj-summary">Stabilising a spacecraft at an unstable Lagrange point under persistent disturbances, comparing pole placement, LQR and NSGA-II multi-objective optimisation to show that how you tune Q/R matters as much as which controller you pick.</div>
+              <div class="proj-tags"><span class="proj-tag">MATLAB</span><span class="proj-tag">LQR</span><span class="proj-tag">Pole Placement</span><span class="proj-tag">NSGA-II</span><span class="proj-tag">Pareto Front</span><span class="proj-tag">Servo-Compensator</span><span class="proj-tag">CR3BP</span></div>
+            </div>
+            <div class="proj-toggle">+</div>
           </div>
         </div>
-      </div>
-      <div class="cs-pipeline">
-        <div class="pipeline-label">Autonomy Pipeline</div>
-        <div class="pipeline">
-          <div class="p-node">LiDAR / IMU</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Hector SLAM</div><div class="p-arrow">→</div>
-          <div class="p-node">Occupancy Grid</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Obstacle Avoidance</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Radiation Sensor Fusion</div><div class="p-arrow">→</div>
-          <div class="p-node highlight2">Live Radiation Map</div>
+        <div class="proj-body"><div class="proj-body-inner">
+          <div class="proj-cols">
+            <div class="proj-col"><div class="proj-col-h">The challenge</div>
+              <p>The Earth-Moon L2 Lagrange point is an unstable equilibrium: a spacecraft placed there will drift away without active control. The open-loop dynamics have an unstable eigenvalue at +2.1587, so the controller must first stabilise that instability.</p>
+              <p>On top of that, persistent sinusoidal disturbances act on the system at 1&thinsp;rad/s. The controller must simultaneously stabilise the unstable dynamics and reject these disturbances asymptotically. A servo-compensator was augmented to the plant to enforce rejection via the Internal Model Principle, bringing the full system to 10th order. The deeper question this project asks: is Bryson's Method actually a good way to tune an LQR controller for mission-relevant performance? The answer, demonstrated systematically, is no.</p>
+            </div>
+            <div class="proj-col"><div class="proj-col-h">My approach</div>
+              <p>Implemented four control architectures in order of increasing sophistication. Pole placement gives two isolated operating points but no understanding of the surrounding design space. LQR with Bryson's Method gives one physically motivated point but no way to know whether it's a good choice relative to other LQR designs.</p>
+              <p>An LQR Pareto front (alpha-sweep) reveals the complete tradeoff curve: Bryson's point sits at the high-effort end, while the knee point at &alpha;=0.0077 achieves comparable settling with 73% less effort. Finally, NSGA-II searches all 12 Q/R diagonal entries independently, finding controllers that alpha-scaling can never reach. A Luenberger observer handles state estimation throughout.</p>
+            </div>
+          </div>
+          <div class="flow">
+            <div class="flow-step">CR3BP plant<br>(4th order)</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">+ Servo-<br>compensator</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">10th-order<br>system</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Luenberger<br>observer</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">LQR / NSGA-II<br>controller</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Disturbance rejection<br>+ stabilisation</div>
+          </div>
+          <div class="metric-mini-grid">
+            <div class="metric-mini"><div class="v">1.8s</div><div class="l">NSGA-II settling time (knee)</div></div>
+            <div class="metric-mini"><div class="v">3.5</div><div class="l">NSGA-II RMS effort (knee)</div></div>
+            <div class="metric-mini"><div class="v">73%</div><div class="l">Less effort vs. Bryson's Method</div></div>
+            <div class="metric-mini"><div class="v">12D</div><div class="l">Q/R space searched by NSGA-II vs. 1D</div></div>
+            <div class="metric-mini"><div class="v">2.6 min</div><div class="l">10,000 LQR designs evaluated</div></div>
+            <div class="metric-mini"><div class="v">10th</div><div class="l">Order of augmented system</div></div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- 03 -->
+      <article class="proj-card" data-cat="uav" data-active="false">
+        <div class="proj-head">
+          <div class="proj-top">
+            <div>
+              <div class="proj-meta"><span class="proj-num">03</span><span class="proj-cat">UAV / Aerial</span><span class="proj-when">Aug 2025</span></div>
+              <div class="proj-title">Autonomous UAV for Radiation Mapping in GPS-Denied Environments</div>
+              <div class="proj-summary">End-to-end autonomy pipeline for mapping radiation in indoor, GPS-denied spaces using SLAM and ROS.</div>
+              <div class="proj-tags"><span class="proj-tag">ROS</span><span class="proj-tag">PX4 SITL</span><span class="proj-tag">Gazebo</span><span class="proj-tag">Hector SLAM</span><span class="proj-tag">A* / DWA Planning</span><span class="proj-tag">RViz</span><span class="proj-tag">Grid Maps</span></div>
+            </div>
+            <div class="proj-toggle">+</div>
+          </div>
         </div>
-      </div>
-      <div class="cs-video">
-        <div class="cs-section-label">Demo Video</div>
-        <video controls preload="none" oncanplay="this.nextElementSibling.classList.add('hidden')">
-          <source src="videos/radiation-mapping.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Outcomes</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">GPS-free</div><div class="result-label">Indoor SLAM-based navigation</div></div>
-          <div class="result-item"><div class="result-value">Real-time</div><div class="result-label">Live radiation map in RViz</div></div>
-          <div class="result-item"><div class="result-value">End-to-end</div><div class="result-label">Full autonomy pipeline in ROS</div></div>
+        <div class="proj-body"><div class="proj-body-inner">
+          <div class="proj-cols">
+            <div class="proj-col"><div class="proj-col-h">The challenge</div>
+              <p>In nuclear facilities or post-disaster environments, humans cannot safely enter radiation-contaminated spaces. A UAV could map these environments but GPS is unavailable indoors and radiation sensors must be fused with spatial data to produce a meaningful map, not just point readings.</p>
+              <p>The hard parts: making the UAV localize itself without GPS, avoiding obstacles in cluttered indoor spaces and overlaying sensor data on a 2D grid map in real time.</p>
+            </div>
+            <div class="proj-col"><div class="proj-col-h">My approach</div>
+              <p>Built the autonomy stack in ROS, integrating PX4 SITL with Gazebo for realistic simulation of flight control, sensors and autonomy logic. Hector SLAM provides GPS-free localisation and maintains the 2D occupancy grid used for both mapping and obstacle detection.</p>
+              <p>On top of that grid, an A* planner handles global path planning toward the current goal, while a Dynamic Window Approach (DWA) local planner replans in real time around obstacles the global plan didn't anticipate. Radiation readings are georeferenced against the SLAM map and rendered as a colour-coded 2D grid map in RViz, updated live as the UAV flies. Addressed sim-to-real challenges including TF frame consistency, sensor noise and timestamp alignment across the ROS graph.</p>
+            </div>
+          </div>
+          <div class="flow">
+            <div class="flow-step">LiDAR / IMU</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Hector SLAM<br>(map + localize)</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">A* global plan</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">DWA local plan<br>(obstacle avoidance)</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Radiation sensor fusion</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Live radiation map</div>
+          </div>
+          <div class="metric-mini-grid">
+            <div class="metric-mini"><div class="v">GPS-free</div><div class="l">Indoor SLAM-based navigation</div></div>
+            <div class="metric-mini"><div class="v">Real-time</div><div class="l">Live radiation map in RViz</div></div>
+            <div class="metric-mini"><div class="v">End-to-end</div><div class="l">Full autonomy pipeline in ROS</div></div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- 04 -->
+      <article class="proj-card" data-cat="uav" data-active="false">
+        <div class="proj-head">
+          <div class="proj-top">
+            <div>
+              <div class="proj-meta"><span class="proj-num">04</span><span class="proj-cat">UAV / Aerial</span><span class="proj-status">Research</span><span class="proj-when">Apr 2026</span></div>
+              <div class="proj-title">LiDAR-Inertial SLAM on Custom Quadrotor (FAST-LIO)</div>
+              <div class="proj-summary">Real-time onboard 3D mapping and state estimation deployed on a self-built quadrotor using an NVIDIA Jetson Orin Nano.</div>
+              <div class="proj-tags"><span class="proj-tag">FAST-LIO</span><span class="proj-tag">LiDAR-Inertial SLAM</span><span class="proj-tag">Jetson Orin Nano</span><span class="proj-tag">Quadrotor</span><span class="proj-tag">3D Mapping</span><span class="proj-tag">ROS 2</span></div>
+            </div>
+            <div class="proj-toggle">+</div>
+          </div>
         </div>
-      </div>
+        <div class="proj-body"><div class="proj-body-inner">
+          <div class="proj-cols">
+            <div class="proj-col"><div class="proj-col-h">The challenge</div>
+              <p>Running 3D LiDAR-inertial SLAM fully onboard a UAV, without offloading to a ground station, is computationally demanding. The challenge was integrating a tightly-coupled SLAM algorithm (FAST-LIO) with limited onboard compute, on a custom-built quadrotor with real vibration and sensor noise.</p>
+              <p>Additionally, the UAV itself had to be assembled and tuned to fly stably enough that SLAM could produce clean maps, since hardware and software are tightly coupled here.</p>
+            </div>
+            <div class="proj-col"><div class="proj-col-h">My approach</div>
+              <p>Assembled and tuned the custom quadrotor frame, ESCs and flight controller from scratch, iterating until the platform flew stably enough for SLAM. This hardware-software co-tuning is rarely discussed but is critical, as vibration and wobble directly corrupt LiDAR point clouds.</p>
+              <p>FAST-LIO, a tightly-coupled LiDAR-inertial odometry algorithm, was then integrated and configured for real-time operation on the Jetson Orin Nano. It fuses LiDAR point clouds with IMU data at high frequency to estimate pose and build a dense 3D map entirely onboard, with no ground station involvement.</p>
+            </div>
+          </div>
+          <div class="flow">
+            <div class="flow-step">LiDAR + IMU</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">FAST-LIO<br>(tightly coupled)</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Pose estimate</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Dense 3D map</div>
+          </div>
+          <div class="metric-mini-grid">
+            <div class="metric-mini"><div class="v">Onboard</div><div class="l">No ground-station offloading</div></div>
+            <div class="metric-mini"><div class="v">Real-time</div><div class="l">3D mapping during flight</div></div>
+            <div class="metric-mini"><div class="v">Custom HW</div><div class="l">Self-built quadrotor platform</div></div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- 05 -->
+      <article class="proj-card" data-cat="deep-learning" data-active="false">
+        <div class="proj-head">
+          <div class="proj-top">
+            <div>
+              <div class="proj-meta"><span class="proj-num">05</span><span class="proj-cat">Deep Learning</span><span class="proj-when">Dec 2025</span></div>
+              <div class="proj-title">Deep Learning Pipeline for Hyperspectral NDVI Prediction</div>
+              <div class="proj-summary">A Hybrid 3D-2D U-Net with Transformer encoders that maps high-dimensional hyperspectral imagery to vegetation health indices with R&sup2; of 0.9692.</div>
+              <div class="proj-tags"><span class="proj-tag">PyTorch</span><span class="proj-tag">U-Net</span><span class="proj-tag">Transformers</span><span class="proj-tag">Hyperspectral Imaging</span><span class="proj-tag">Regression</span><span class="proj-tag">Deep Learning</span></div>
+            </div>
+            <div class="proj-toggle">+</div>
+          </div>
+        </div>
+        <div class="proj-body"><div class="proj-body-inner">
+          <div class="proj-cols">
+            <div class="proj-col"><div class="proj-col-h">The challenge</div>
+              <p>Hyperspectral cameras capture hundreds of spectral bands per pixel, creating 3D input tensors that are far richer and far harder to process than standard RGB images. The task: predict NDVI (Normalized Difference Vegetation Index), a 2D continuous map of vegetation health, from these high-dimensional inputs.</p>
+              <p>Standard 2D CNNs discard spectral structure. Standard 3D CNNs are too expensive. The model needed to capture both spectral depth and spatial context efficiently.</p>
+            </div>
+            <div class="proj-col"><div class="proj-col-h">My approach</div>
+              <p>Designed a Hybrid 3D-2D U-Net: 3D convolutions in the encoder extract spectral-spatial features across all bands, then a 2D decoder maps these to a dense NDVI output, capturing spectral depth without the full cost of a 3D network throughout.</p>
+              <p>Transformer encoders were integrated into the CNN bottleneck to capture global spatial context alongside local feature extraction. The training loop includes data augmentation, global min-max normalisation and validation-based checkpointing to prevent overfitting on the limited hyperspectral dataset.</p>
+            </div>
+          </div>
+          <div class="flow">
+            <div class="flow-step">Hyperspectral<br>input (3D)</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">3D CNN<br>encoder</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Transformer<br>bottleneck</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">2D decoder</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">NDVI map<br>output</div>
+          </div>
+          <div class="metric-mini-grid">
+            <div class="metric-mini"><div class="v">0.9692</div><div class="l">R&sup2; (final model)</div></div>
+            <div class="metric-mini"><div class="v">0.0208</div><div class="l">RMSE (final model)</div></div>
+            <div class="metric-mini"><div class="v">0.86</div><div class="l">R&sup2; (baseline U-Net)</div></div>
+            <div class="metric-mini"><div class="v">0.0443</div><div class="l">RMSE (baseline U-Net)</div></div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- 06 -->
+      <article class="proj-card" data-cat="control" data-active="false">
+        <div class="proj-head">
+          <div class="proj-top">
+            <div>
+              <div class="proj-meta"><span class="proj-num">06</span><span class="proj-cat">Planning &amp; Control</span><span class="proj-when">Jul 2024</span></div>
+              <div class="proj-title">3D Human Tracking: YOLOv8 + Kalman Filter + RGB-D</div>
+              <div class="proj-summary">Multi-target 3D human tracking for mobile robot safety, fusing depth camera detection with a Kalman filter and optimal data association.</div>
+              <div class="proj-tags"><span class="proj-tag">ROS 2</span><span class="proj-tag">YOLOv8</span><span class="proj-tag">Kalman Filter</span><span class="proj-tag">RGB-D Camera</span><span class="proj-tag">Data Association</span><span class="proj-tag">Python</span></div>
+            </div>
+            <div class="proj-toggle">+</div>
+          </div>
+        </div>
+        <div class="proj-body"><div class="proj-body-inner">
+          <div class="proj-cols">
+            <div class="proj-col"><div class="proj-col-h">The challenge</div>
+              <p>For a robot to safely navigate around people, it needs more than "there's a person at pixel (x, y)." It needs stable 3D position estimates across multiple people, accounting for sensor noise, occlusions and the fact that people come and go from the scene.</p>
+              <p>Naive detection-only approaches flicker and lose track identity, making them unreliable for safety-critical use. The challenge was building a tracker that stays stable across time, even under noisy depth readings and partial occlusions.</p>
+            </div>
+            <div class="proj-col"><div class="proj-col-h">My approach</div>
+              <p>YOLOv8 detects people in the RGB image. For each detection, the corresponding depth value back-projects the 2D bounding-box centre into a 3D position in the robot frame. A multi-target Kalman filter maintains smoothed estimates of each person's 3D position and velocity over time.</p>
+              <p>The hardest part is data association: when there are multiple detections and tracks, which detection belongs to which track? The Jonker-Volgenant algorithm, an efficient optimal assignment solver, resolves this at each timestep, enabling stable track identities even in crowded scenes.</p>
+            </div>
+          </div>
+          <div class="flow">
+            <div class="flow-step">RGB-D frame</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">YOLOv8<br>detection</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">3D back-<br>projection</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Jonker-Volgenant<br>assignment</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Kalman filter<br>update</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Stable 3D<br>tracks</div>
+          </div>
+          <div class="proj-media">
+            <video controls preload="none"><source src="videos/human-tracking.webm" type="video/webm"></video>
+            <div class="proj-media-cap">Demo: multi-target 3D human tracking</div>
+          </div>
+          <div class="metric-mini-grid">
+            <div class="metric-mini"><div class="v">Multi-target</div><div class="l">Simultaneous person tracking</div></div>
+            <div class="metric-mini"><div class="v">3D position</div><div class="l">Depth-fused estimates in robot frame</div></div>
+            <div class="metric-mini"><div class="v">Stable IDs</div><div class="l">Persistent identities across frames</div></div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- 07 -->
+      <article class="proj-card" data-cat="embedded" data-active="false">
+        <div class="proj-head">
+          <div class="proj-top">
+            <div>
+              <div class="proj-meta"><span class="proj-num">07</span><span class="proj-cat">Embedded / Edge</span><span class="proj-when">Nov 2025</span></div>
+              <div class="proj-title">Embedded ML for Hand-Tool Ergonomics Monitoring</div>
+              <div class="proj-summary">A TinyML classifier running on an STM32 microcontroller that detects unsafe wrist posture during hand-tool use in real time, with 94% accuracy on the MCU.</div>
+              <div class="proj-tags"><span class="proj-tag">TinyML</span><span class="proj-tag">STM32</span><span class="proj-tag">MEMS IMU</span><span class="proj-tag">Edge AI</span><span class="proj-tag">Classification</span><span class="proj-tag">MEMS Studio</span></div>
+            </div>
+            <div class="proj-toggle">+</div>
+          </div>
+        </div>
+        <div class="proj-body"><div class="proj-body-inner">
+          <div class="proj-cols">
+            <div class="proj-col"><div class="proj-col-h">The challenge</div>
+              <p>Repetitive awkward wrist postures during hand-tool use are a leading cause of musculoskeletal disorders in manufacturing workers. Existing solutions require expensive motion-capture setups or clinician observation and neither is scalable to a factory floor.</p>
+              <p>The goal: build a wearable, real-time ergonomic monitor that runs entirely on a cheap microcontroller, with no cloud, no latency and no battery-draining wireless streaming.</p>
+            </div>
+            <div class="proj-col"><div class="proj-col-h">My approach</div>
+              <p>Built a wearable prototype using an STM32 microcontroller and a MEMS IMU, developed in MEMS Studio. The IMU captures wrist and forearm motion during tool use and the data was used to train a TinyML classifier to recognise operation type and posture.</p>
+              <p>The model was quantised and deployed directly onto the MCU, running inference in real time without any wireless streaming or cloud dependency. The classifier distinguishes between safe and unsafe ergonomic postures at the point of use.</p>
+            </div>
+          </div>
+          <div class="metric-mini-grid">
+            <div class="metric-mini"><div class="v">~94%</div><div class="l">On-device classification accuracy</div></div>
+            <div class="metric-mini"><div class="v">Real-time</div><div class="l">Live posture feedback on MCU</div></div>
+            <div class="metric-mini"><div class="v">No cloud</div><div class="l">Fully edge-deployed inference</div></div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- 08 -->
+      <article class="proj-card" data-cat="perception" data-active="false">
+        <div class="proj-head">
+          <div class="proj-top">
+            <div>
+              <div class="proj-meta"><span class="proj-num">08</span><span class="proj-cat">ML / Perception</span><span class="proj-when">Mar 2024</span></div>
+              <div class="proj-title">Sudoku Solver using OpenCV, CNN and Dancing Links</div>
+              <div class="proj-summary">End-to-end vision pipeline that reads a Sudoku puzzle from an image, recognises digits with a CNN and solves it using the Dancing Links algorithm.</div>
+              <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">OpenCV</span><span class="proj-tag">CNN</span><span class="proj-tag">Dancing Links (DLX)</span><span class="proj-tag">Image Processing</span></div>
+            </div>
+            <div class="proj-toggle">+</div>
+          </div>
+        </div>
+        <div class="proj-body"><div class="proj-body-inner">
+          <div class="proj-cols">
+            <div class="proj-col"><div class="proj-col-h">The challenge</div>
+              <p>Building a solver that works end-to-end from a raw image requires solving three distinct problems: detecting and rectifying the grid, recognising digits reliably under imaging variability and then solving the puzzle efficiently.</p>
+            </div>
+            <div class="proj-col"><div class="proj-col-h">My approach</div>
+              <p>Used OpenCV to detect the grid and segment individual cells. Trained a CNN classifier for digit recognition under lighting and perspective variability. Implemented and compared three solvers: constraint propagation, Dancing Links (DLX) and an optimised DLX variant.</p>
+            </div>
+          </div>
+          <div class="metric-mini-grid">
+            <div class="metric-mini"><div class="v">3</div><div class="l">Solver strategies compared</div></div>
+            <div class="metric-mini"><div class="v">End-to-end</div><div class="l">Image in, solution out</div></div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- 09 -->
+      <article class="proj-card" data-cat="control" data-active="false">
+        <div class="proj-head">
+          <div class="proj-top">
+            <div>
+              <div class="proj-meta"><span class="proj-num">09</span><span class="proj-cat">Control</span><span class="proj-when">Nov 2022</span></div>
+              <div class="proj-title">Exponential Stabilisation of a Nonholonomic Mobile Robot</div>
+              <div class="proj-summary">Simulation study reproducing and validating a nonlinear feedback control law for exponential stabilisation of a two-wheeled mobile robot from arbitrary initial conditions.</div>
+              <div class="proj-tags"><span class="proj-tag">MATLAB</span><span class="proj-tag">Nonlinear Control</span><span class="proj-tag">Robot Kinematics</span><span class="proj-tag">Time-Domain Simulation</span></div>
+            </div>
+            <div class="proj-toggle">+</div>
+          </div>
+        </div>
+        <div class="proj-body"><div class="proj-body-inner">
+          <div class="proj-cols">
+            <div class="proj-col"><div class="proj-col-h">The challenge</div>
+              <p>Nonholonomic systems cannot be stabilised by smooth time-invariant feedback, as standard linear control does not apply. Stabilising a two-wheeled robot to a fixed pose requires a nonlinear control law with provable convergence guarantees.</p>
+            </div>
+            <div class="proj-col"><div class="proj-col-h">My approach</div>
+              <p>Implemented the nonlinear feedback control law from &ldquo;Exponential Stabilization of Mobile Robots with Nonholonomic Constraints&rdquo; in MATLAB. Validated global exponential convergence of all states from arbitrary initial conditions through time-domain simulation, verifying the stability guarantees predicted by theory.</p>
+            </div>
+          </div>
+          <div class="proj-media">
+            <video controls preload="none"><source src="videos/nonholonomic-stabilisation.mp4" type="video/mp4"></video>
+            <div class="proj-media-cap">Demo: nonholonomic robot converging from arbitrary initial conditions</div>
+          </div>
+          <div class="metric-mini-grid">
+            <div class="metric-mini"><div class="v">Global</div><div class="l">Exponential convergence verified</div></div>
+            <div class="metric-mini"><div class="v">Arbitrary</div><div class="l">Initial conditions tested</div></div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- 10 -->
+      <article class="proj-card" data-cat="control" data-active="false">
+        <div class="proj-head">
+          <div class="proj-top">
+            <div>
+              <div class="proj-meta"><span class="proj-num">10</span><span class="proj-cat">Control</span><span class="proj-when">Jul 2022</span></div>
+              <div class="proj-title">Perimeter-Defense Game: One Attacker vs. One Defender</div>
+              <div class="proj-summary">MATLAB simulation of an optimal pursuit-evasion game where an attacker tries to breach a circular perimeter and a defender tries to intercept it, using differential game theory to derive and visualise the winning regions.</div>
+              <div class="proj-tags"><span class="proj-tag">MATLAB</span><span class="proj-tag">Differential Game Theory</span><span class="proj-tag">Pursuit-Evasion</span><span class="proj-tag">Optimal Control</span><span class="proj-tag">Game Theory</span></div>
+            </div>
+            <div class="proj-toggle">+</div>
+          </div>
+        </div>
+        <div class="proj-body"><div class="proj-body-inner">
+          <div class="proj-cols">
+            <div class="proj-col"><div class="proj-col-h">The problem</div>
+              <p>A defender moves along the perimeter of a circular target region. An attacker starts outside and tries to reach the perimeter without being intercepted. The key parameter is the speed ratio v = v<sub>attacker</sub> / v<sub>defender</sub>. When the attacker is slower, can it still find a guaranteed winning strategy?</p>
+              <p>This is a two-player zero-sum differential game: both players act optimally and in opposition. The challenge is deriving closed-form optimal strategies and the exact boundary that separates winning initial conditions from losing ones.</p>
+            </div>
+            <div class="proj-col"><div class="proj-col-h">My approach</div>
+              <p>Based on Shishika &amp; Kumar (CDC 2018), I simulated the two-player game from first principles in MATLAB. The defender's optimal strategy is to track the attacker's angular position at maximum speed. The attacker's optimal strategy is to head toward the tangent point on the perimeter that maximises its lead over the defender.</p>
+              <p>The winning-region boundary is an involute of the circle, derived from the game's value function V. I simulated state trajectories for multiple initial conditions to verify that the theory holds: the attacker wins if and only if it starts inside the involute region.</p>
+            </div>
+          </div>
+          <div class="flow">
+            <div class="flow-step">Initial<br>positions</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Value<br>function V</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Winning region<br>(involute)</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Optimal<br>strategies</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Intercept<br>or breach</div>
+          </div>
+          <div class="proj-media">
+            <video controls preload="none"><source src="videos/perimeter-defense.mp4" type="video/mp4"></video>
+            <div class="proj-media-cap">Demo: pursuit-evasion simulation, winning region visualised</div>
+          </div>
+          <div class="metric-mini-grid">
+            <div class="metric-mini"><div class="v">Verified</div><div class="l">Optimal strategies from differential game theory</div></div>
+            <div class="metric-mini"><div class="v">Involute</div><div class="l">Winning-region boundary visualised</div></div>
+            <div class="metric-mini"><div class="v">Speed ratio</div><div class="l">Effect of v on winning region simulated</div></div>
+          </div>
+        </div></div>
+      </article>
+
     </div>
   </div>
-<!-- ── PROJECT 4 ── -->
-  <div class="case-study" data-category="uav">
-    <div class="cs-header" onclick="toggleCS(this)">
-      <div class="cs-header-left">
-        <div class="cs-meta">
-          <span class="cs-num">04</span>
-          <span class="cs-cat-badge cat-uav">UAV / Aerial</span>
-          <span class="cs-live-badge"><span class="dot-live"></span> Research</span>
-        </div>
-        <div class="cs-title">LiDAR-Inertial SLAM on Custom Quadrotor (FAST-LIO)</div>
-        <div class="cs-tagline">Real-time onboard 3D mapping and state estimation deployed on a self-built quadrotor using an NVIDIA Jetson Orin Nano.</div>
-      </div>
-      <div class="cs-header-right">
-        <div class="cs-date">Apr 2026</div>
-        <div class="cs-toggle">＋</div>
-      </div>
-    </div>
-    <div class="cs-tags-row">
-      <span class="cs-tag">FAST-LIO</span><span class="cs-tag">LiDAR-Inertial SLAM</span><span class="cs-tag">Jetson Orin Nano</span>
-      <span class="cs-tag">Quadrotor</span><span class="cs-tag">3D Mapping</span><span class="cs-tag">ROS 2</span>
-    </div>
-    <div class="cs-body">
-      <div class="cs-grid">
-        <div class="cs-col">
-          <div class="cs-section-label">The Challenge</div>
-          <div class="cs-text">
-            <p>Running 3D LiDAR-inertial SLAM fully onboard a UAV, without offloading to a ground station, is computationally demanding. The challenge was integrating a tightly-coupled SLAM algorithm (FAST-LIO) with limited onboard compute, on a custom-built quadrotor with real vibration and sensor noise.</p>
-            <p>Additionally, the UAV itself had to be assembled and tuned to fly stably enough that SLAM could produce clean maps, as hardware and software are tightly coupled here.</p>
-          </div>
-        </div>
-        <div class="cs-col">
-          <div class="cs-section-label">My Approach</div>
-          <div class="cs-text">
-            <p>Assembled and tuned the custom quadrotor frame, ESCs, and flight controller from scratch, iterating until the platform flew stably enough for SLAM. This hardware-software co-tuning is rarely discussed but is critical as vibration and wobble directly corrupt LiDAR point clouds.</p>
-            <p>FAST-LIO, a tightly-coupled LiDAR-inertial odometry algorithm, was then integrated and configured for real-time operation on the Jetson Orin Nano. It fuses LiDAR point clouds with IMU data at high frequency to estimate pose and build a dense 3D map entirely onboard, with no ground station involvement.</p>
-          </div>
-        </div>
-      </div>
-      <div class="cs-pipeline">
-        <div class="pipeline-label">Onboard SLAM Pipeline</div>
-        <div class="pipeline">
-          <div class="p-node">LiDAR + IMU</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">FAST-LIO (tightly coupled)</div><div class="p-arrow">→</div>
-          <div class="p-node">Pose estimate</div><div class="p-arrow">→</div>
-          <div class="p-node highlight2">Dense 3D Map</div>
-        </div>
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Outcomes</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">Onboard</div><div class="result-label">No ground station offloading</div></div>
-          <div class="result-item"><div class="result-value">Real-time</div><div class="result-label">3D mapping during flight</div></div>
-          <div class="result-item"><div class="result-value">Custom HW</div><div class="result-label">Self-built quadrotor platform</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- ── PROJECT 5 ── -->
-  <div class="case-study" data-category="ml">
-    <div class="cs-header" onclick="toggleCS(this)">
-      <div class="cs-header-left">
-        <div class="cs-meta">
-          <span class="cs-num">05</span>
-          <span class="cs-cat-badge cat-ml">Deep Learning</span>
-        </div>
-        <div class="cs-title">Deep Learning Pipeline for Hyperspectral NDVI Prediction</div>
-        <div class="cs-tagline">A Hybrid 3D-2D U-Net with Transformer encoders that maps high-dimensional hyperspectral imagery to vegetation health indices with R² of 0.9692.</div>
-      </div>
-      <div class="cs-header-right">
-        <div class="cs-date">Dec 2025</div>
-        <div class="cs-toggle">＋</div>
-      </div>
-    </div>
-    <div class="cs-tags-row">
-      <span class="cs-tag">PyTorch</span><span class="cs-tag">U-Net</span><span class="cs-tag">Transformers</span>
-      <span class="cs-tag">Hyperspectral Imaging</span><span class="cs-tag">Regression</span><span class="cs-tag">Deep Learning</span>
-    </div>
-    <div class="cs-body">
-      <div class="cs-grid">
-        <div class="cs-col">
-          <div class="cs-section-label">The Challenge</div>
-          <div class="cs-text">
-            <p>Hyperspectral cameras capture hundreds of spectral bands per pixel, creating 3D input tensors that are far richer and far harder to process than standard RGB images. The task: predict NDVI (Normalized Difference Vegetation Index), a 2D continuous map of vegetation health, from these high-dimensional inputs.</p>
-            <p>Standard 2D CNNs discard spectral structure. Standard 3D CNNs are too expensive. The model needed to capture both spectral depth and spatial context efficiently.</p>
-          </div>
-        </div>
-        <div class="cs-col">
-          <div class="cs-section-label">My Approach</div>
-          <div class="cs-text">
-            <p>Designed a Hybrid 3D-2D U-Net: 3D convolutions in the encoder extract spectral-spatial features across all bands, then a 2D decoder maps these to a dense NDVI output. This hybrid architecture captures spectral depth without the full cost of a 3D network throughout.</p>
-            <p>Transformer encoders were integrated into the CNN bottleneck to capture global spatial context alongside local feature extraction. The training loop includes data augmentation, global min-max normalisation, and validation-based checkpointing to prevent overfitting on the limited hyperspectral dataset.</p>
-          </div>
-        </div>
-      </div>
-      <div class="cs-pipeline">
-        <div class="pipeline-label">Model Architecture</div>
-        <div class="pipeline">
-          <div class="p-node">Hyperspectral input (3D)</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">3D CNN encoder</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Transformer bottleneck</div><div class="p-arrow">→</div>
-          <div class="p-node">2D decoder</div><div class="p-arrow">→</div>
-          <div class="p-node highlight2">NDVI map output</div>
-        </div>
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Results</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">0.9692</div><div class="result-label">R² (final model)</div></div>
-          <div class="result-item"><div class="result-value">0.0208</div><div class="result-label">RMSE (final model)</div></div>
-          <div class="result-item"><div class="result-value">0.86</div><div class="result-label">R² (baseline U-Net)</div></div>
-          <div class="result-item"><div class="result-value">0.0443</div><div class="result-label">RMSE (baseline U-Net)</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- ── PROJECT 6 ── -->
-  <div class="case-study" data-category="control">
-    <div class="cs-header" onclick="toggleCS(this)">
-      <div class="cs-header-left">
-        <div class="cs-meta">
-          <span class="cs-num">06</span>
-          <span class="cs-cat-badge cat-control">Planning &amp; Control</span>
-        </div>
-        <div class="cs-title">3D Human Tracking: YOLOv8 + Kalman Filter + RGB-D</div>
-        <div class="cs-tagline">Multi-target 3D human tracking for mobile robot safety, fusing depth camera detection with a Kalman filter and optimal data association.</div>
-      </div>
-      <div class="cs-header-right">
-        <div class="cs-date">Jul 2024</div>
-        <div class="cs-toggle">＋</div>
-      </div>
-    </div>
-    <div class="cs-tags-row">
-      <span class="cs-tag">ROS 2</span><span class="cs-tag">YOLOv8</span><span class="cs-tag">Kalman Filter</span>
-      <span class="cs-tag">RGB-D Camera</span><span class="cs-tag">Data Association</span><span class="cs-tag">Python</span>
-    </div>
-    <div class="cs-body">
-      <div class="cs-grid">
-        <div class="cs-col">
-          <div class="cs-section-label">The Challenge</div>
-          <div class="cs-text">
-            <p>For a robot to safely navigate around people, it needs more than "there's a person at pixel (x, y)." It needs stable 3D position estimates across multiple people, accounting for sensor noise, occlusions and the fact that people come and go from the scene.</p>
-            <p>Naive detection-only approaches flicker and lose track identity, making them unreliable for safety-critical use. The challenge was building a tracker that stays stable across time, even under noisy depth readings and partial occlusions.</p>
-          </div>
-        </div>
-        <div class="cs-col">
-          <div class="cs-section-label">My Approach</div>
-          <div class="cs-text">
-            <p>YOLOv8 detects people in the RGB image. For each detection, the corresponding depth value back-projects the 2D bounding box centre into a 3D position in the robot frame. A <strong style="color:var(--text)">multi-target Kalman filter</strong> maintains smoothed estimates of each person's 3D position and velocity over time.</p>
-            <p>The hardest part is data association: when there are multiple detections and tracks, which detection belongs to which track? The <strong style="color:var(--text)">Jonker-Volgenant algorithm</strong>, an efficient optimal assignment solver, resolves this at each timestep, enabling stable track identities even in crowded scenes.</p>
-          </div>
-        </div>
-      </div>
-      <div class="cs-pipeline">
-        <div class="pipeline-label">Tracking Pipeline</div>
-        <div class="pipeline">
-          <div class="p-node">RGB-D frame</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">YOLOv8 detection</div><div class="p-arrow">→</div>
-          <div class="p-node">3D back-projection</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Jonker-Volgenant assignment</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Kalman filter update</div><div class="p-arrow">→</div>
-          <div class="p-node highlight2">Stable 3D tracks</div>
-        </div>
-      </div>
-      <div class="cs-video">
-        <div class="cs-section-label">Demo Video</div>
-        <video controls preload="none" oncanplay="this.nextElementSibling.classList.add('hidden')">
-          <source src="videos/human-tracking.webm" type="video/webm">
-        </video>
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Outcomes</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">Multi-target</div><div class="result-label">Simultaneous person tracking</div></div>
-          <div class="result-item"><div class="result-value">3D position</div><div class="result-label">Depth-fused estimates in robot frame</div></div>
-          <div class="result-item"><div class="result-value">Stable IDs</div><div class="result-label">Persistent identities across frames</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- ── PROJECT 7 ── -->
-  <div class="case-study" data-category="embedded">
-    <div class="cs-header" onclick="toggleCS(this)">
-      <div class="cs-header-left">
-        <div class="cs-meta">
-          <span class="cs-num">07</span>
-          <span class="cs-cat-badge cat-embedded">Embedded / Edge</span>
-        </div>
-        <div class="cs-title">Embedded ML for Hand-Tool Ergonomics Monitoring</div>
-        <div class="cs-tagline">A TinyML classifier running on an STM32 microcontroller that detects unsafe wrist posture during hand-tool use in real time, with 94% accuracy on the MCU.</div>
-      </div>
-      <div class="cs-header-right">
-        <div class="cs-date">Nov 2025</div>
-        <div class="cs-toggle">＋</div>
-      </div>
-    </div>
-    <div class="cs-tags-row">
-      <span class="cs-tag">TinyML</span><span class="cs-tag">STM32</span><span class="cs-tag">MEMS IMU</span>
-      <span class="cs-tag">Edge AI</span><span class="cs-tag">Classification</span><span class="cs-tag">MEMS Studio</span>
-    </div>
-    <div class="cs-body">
-      <div class="cs-grid">
-        <div class="cs-col">
-          <div class="cs-section-label">The Challenge</div>
-          <div class="cs-text">
-            <p>Repetitive awkward wrist postures during hand-tool use are a leading cause of musculoskeletal disorders in manufacturing workers. Existing solutions require expensive motion-capture setups or clinician observation, and neither is scalable to a factory floor.</p>
-            <p>The goal: build a wearable, real-time ergonomic monitor that runs entirely on a cheap microcontroller: no cloud, no latency, no battery-draining wireless streaming.</p>
-          </div>
-        </div>
-        <div class="cs-col">
-          <div class="cs-section-label">My Approach</div>
-          <div class="cs-text">
-            <p>Built a wearable prototype using an STM32 microcontroller and a MEMS IMU, developed in MEMS Studio. The IMU captures wrist and forearm motion during tool use, and the data was used to train a TinyML classifier to recognise operation type and posture.</p>
-            <p>The model was quantised and deployed directly onto the MCU, running inference in real time without any wireless streaming or cloud dependency. The classifier distinguishes between safe and unsafe ergonomic postures at the point of use.</p>
-          </div>
-        </div>
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Results</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">~94%</div><div class="result-label">On-device classification accuracy</div></div>
-          <div class="result-item"><div class="result-value">Real-time</div><div class="result-label">Live posture feedback on MCU</div></div>
-          <div class="result-item"><div class="result-value">No cloud</div><div class="result-label">Fully edge-deployed inference</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- ── PROJECT 8 ── -->
-  <div class="case-study" data-category="ml">
-    <div class="cs-header" onclick="toggleCS(this)">
-      <div class="cs-header-left">
-        <div class="cs-meta">
-          <span class="cs-num">08</span>
-          <span class="cs-cat-badge cat-ml">ML / Perception</span>
-        </div>
-        <div class="cs-title">Sudoku Solver using OpenCV, CNN and Dancing Links</div>
-        <div class="cs-tagline">End-to-end vision pipeline that reads a Sudoku puzzle from an image, recognises digits with a CNN and solves it using the Dancing Links algorithm.</div>
-      </div>
-      <div class="cs-header-right">
-        <div class="cs-date">Mar 2024</div>
-        <div class="cs-toggle">＋</div>
-      </div>
-    </div>
-    <div class="cs-tags-row">
-      <span class="cs-tag">Python</span><span class="cs-tag">OpenCV</span><span class="cs-tag">CNN</span>
-      <span class="cs-tag">Dancing Links (DLX)</span><span class="cs-tag">Image Processing</span>
-    </div>
-    <div class="cs-body">
-      <div class="cs-grid">
-        <div class="cs-col">
-          <div class="cs-section-label">The Challenge</div>
-          <div class="cs-text">
-            <p>Building a solver that works end-to-end from a raw image requires solving three distinct problems: detecting and rectifying the grid, recognising digits reliably under imaging variability and then solving the puzzle efficiently.</p>
-          </div>
-        </div>
-        <div class="cs-col">
-          <div class="cs-section-label">My Approach</div>
-          <div class="cs-text">
-            <p>Used OpenCV to detect the grid and segment individual cells. Trained a CNN classifier for digit recognition under lighting and perspective variability. Implemented and compared three solvers: constraint propagation, Dancing Links (DLX) and an optimised DLX variant.</p>
-          </div>
-        </div>
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Outcomes</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">3</div><div class="result-label">Solver strategies compared</div></div>
-          <div class="result-item"><div class="result-value">End-to-end</div><div class="result-label">Image in, solution out</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- ── PROJECT 9 ── -->
-  <div class="case-study" data-category="control">
-    <div class="cs-header" onclick="toggleCS(this)">
-      <div class="cs-header-left">
-        <div class="cs-meta">
-          <span class="cs-num">09</span>
-          <span class="cs-cat-badge cat-control">Control</span>
-        </div>
-        <div class="cs-title">Exponential Stabilisation of a Nonholonomic Mobile Robot</div>
-        <div class="cs-tagline">Simulation study reproducing and validating a nonlinear feedback control law for exponential stabilisation of a two-wheeled mobile robot from arbitrary initial conditions.</div>
-      </div>
-      <div class="cs-header-right">
-        <div class="cs-date">Nov 2022</div>
-        <div class="cs-toggle">＋</div>
-      </div>
-    </div>
-    <div class="cs-tags-row">
-      <span class="cs-tag">MATLAB</span><span class="cs-tag">Nonlinear Control</span><span class="cs-tag">Robot Kinematics</span>
-      <span class="cs-tag">Time-Domain Simulation</span>
-    </div>
-    <div class="cs-body">
-      <div class="cs-grid">
-        <div class="cs-col">
-          <div class="cs-section-label">The Challenge</div>
-          <div class="cs-text">
-            <p>Nonholonomic systems cannot be stabilised by smooth time-invariant feedback as standard linear control does not apply. Stabilising a two-wheeled robot to a fixed pose requires a nonlinear control law with provable convergence guarantees.</p>
-          </div>
-        </div>
-        <div class="cs-col">
-          <div class="cs-section-label">My Approach</div>
-          <div class="cs-text">
-            <p>Implemented the nonlinear feedback control law from the paper "Exponential Stabilization of Mobile Robots with Nonholonomic Constraints" in MATLAB. Validated global exponential convergence of all states from arbitrary initial conditions through time-domain simulation, verifying the stability guarantees predicted by theory.</p>
-          </div>
-        </div>
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Outcomes</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">Global</div><div class="result-label">Exponential convergence verified</div></div>
-          <div class="result-item"><div class="result-value">Arbitrary</div><div class="result-label">Initial conditions tested</div></div>
-        </div>
-      </div>
-      <div class="cs-video">
-        <div class="cs-section-label">Demo Video</div>
-        <video controls preload="none" oncanplay="this.nextElementSibling.classList.add('hidden')">
-          <source src="videos/nonholonomic-stabilisation.mp4" type="video/mp4">
-        </video>
-      </div>
-    </div>
-  </div>
-  <!-- ── PROJECT 10 ── -->
-  <div class="case-study" data-category="control">
-    <div class="cs-header" onclick="toggleCS(this)">
-      <div class="cs-header-left">
-        <div class="cs-meta">
-          <span class="cs-num">10</span>
-          <span class="cs-cat-badge cat-control">Control</span>
-        </div>
-        <div class="cs-title">Perimeter-Defense Game: One Attacker vs One Defender</div>
-        <div class="cs-tagline">MATLAB simulation of an optimal pursuit-evasion game where an attacker tries to breach a circular perimeter and a defender tries to intercept it, using differential game theory to derive and visualise the winning regions.</div>
-      </div>
-      <div class="cs-header-right">
-        <div class="cs-date">Jul 2022</div>
-        <div class="cs-toggle">＋</div>
-      </div>
-    </div>
-    <div class="cs-tags-row">
-      <span class="cs-tag">MATLAB</span><span class="cs-tag">Differential Game Theory</span><span class="cs-tag">Pursuit-Evasion</span>
-      <span class="cs-tag">Optimal Control</span><span class="cs-tag">Game Theory</span>
-    </div>
-    <div class="cs-body">
-      <div class="cs-grid">
-        <div class="cs-col">
-          <div class="cs-section-label">The Problem</div>
-          <div class="cs-text">
-            <p>A defender moves along the perimeter of a circular target region. An attacker starts outside and tries to reach the perimeter without being intercepted. The key parameter is the speed ratio v = v_attacker / v_defender. When the attacker is slower, can it still find a guaranteed winning strategy?</p>
-            <p>This is a two-player zero-sum differential game: both players act optimally and in opposition. The challenge is deriving closed-form optimal strategies and the exact boundary that separates winning initial conditions from losing ones.</p>
-          </div>
-        </div>
-        <div class="cs-col">
-          <div class="cs-section-label">My Approach</div>
-          <div class="cs-text">
-            <p>Based on Shishika and Kumar (CDC 2018), I simulated the two-player game from first principles in MATLAB. The defender's optimal strategy is to track the attacker's angular position at maximum speed. The attacker's optimal strategy is to head towards the tangent point on the perimeter that maximises its lead over the defender.</p>
-            <p>The winning region boundary is an involute of the circle, derived from the game's value function V. I simulated state trajectories for multiple initial conditions to verify that the theory holds: attacker wins if and only if it starts inside the involute region.</p>
-          </div>
-        </div>
-      </div>
-      <div class="cs-pipeline">
-        <div class="pipeline-label">Game Structure</div>
-        <div class="pipeline">
-          <div class="p-node">Initial positions</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Value function V</div><div class="p-arrow">→</div>
-          <div class="p-node">Winning region (involute)</div><div class="p-arrow">→</div>
-          <div class="p-node highlight">Optimal strategies</div><div class="p-arrow">→</div>
-          <div class="p-node highlight2">Intercept or breach</div>
-        </div>
-      </div>
-      <div class="cs-results">
-        <div class="cs-section-label">Outcomes</div>
-        <div class="results-grid">
-          <div class="result-item"><div class="result-value">Verified</div><div class="result-label">Optimal strategies from differential game theory</div></div>
-          <div class="result-item"><div class="result-value">Involute</div><div class="result-label">Winning region boundary visualised</div></div>
-          <div class="result-item"><div class="result-value">Speed ratio</div><div class="result-label">Effect of v on winning region simulated</div></div>
-        </div>
-      </div>
-      <div class="cs-video">
-        <div class="cs-section-label">Demo Video</div>
-        <video controls preload="none" oncanplay="this.nextElementSibling.classList.add('hidden')">
-          <source src="videos/perimeter-defense.mp4" type="video/mp4">
-        </video>
-      </div>
-    </div>
-  </div>
-</div><!-- /projects-wrapper -->
-<!-- FOOTER -->
+</section>
+
 <footer>
-  <div class="footer-links">
-    <a href="mailto:dahalc1@unlv.nevada.edu">dahalc1@unlv.nevada.edu</a>
-    <a href="https://github.com/chetandahal80" target="_blank">GitHub</a>
-    <a href="https://linkedin.com/in/chetandahal" target="_blank">LinkedIn</a>
+  <div class="wrap-wide">
+    <div>
+      <p>&copy; 2026 Chetan Dahal &middot; Built with care, hosted on GitHub Pages</p>
+    </div>
+    <div class="f-links">
+      <a href="mailto:dahalc1@unlv.nevada.edu">dahalc1@unlv.nevada.edu</a>
+      <a href="https://github.com/chetandahal80" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/chetandahal" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
   </div>
-  <div class="footer-copy">Built with care. Hosted on GitHub Pages.</div>
 </footer>
+
 <script>
-  function toggleCS(header) {
-    const card = header.closest('.case-study');
-    const body = card.querySelector('.cs-body');
-    const toggle = header.querySelector('.cs-toggle');
-    const isOpen = body.classList.contains('open');
-    body.classList.toggle('open', !isOpen);
-    toggle.textContent = isOpen ? '＋' : '－';
-  }
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+(function() {
+  // accordion
+  document.querySelectorAll('.proj-head').forEach(function(head) {
+    head.addEventListener('click', function() {
+      var card = head.closest('.proj-card');
+      var isActive = card.getAttribute('data-active') === 'true';
+      card.setAttribute('data-active', isActive ? 'false' : 'true');
+    });
+  });
+
+  // filters
+  var buttons = document.querySelectorAll('.filter-btn');
+  var cards = document.querySelectorAll('.proj-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      document.querySelectorAll('.case-study').forEach(card => {
-        card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+      var f = btn.getAttribute('data-filter');
+      cards.forEach(function(c) {
+        c.style.display = (f === 'all' || c.getAttribute('data-cat') === f) ? '' : 'none';
       });
     });
   });
-  const firstHeader = document.querySelector('.cs-header');
-  if (firstHeader) toggleCS(firstHeader);
+
+  // open project 01 by default
+  var first = document.querySelector('.proj-card');
+  if (first) first.setAttribute('data-active', 'true');
+})();
 </script>
+
 </body>
 </html>
