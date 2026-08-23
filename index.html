@@ -64,25 +64,22 @@ code, .mono, .num, .tag, .metric-value, .eq { font-family: "IBM Plex Mono", ui-m
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
 .wrap-wide { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
-
 /* corner-bracket plate */
 .plate { position: relative; background: var(--bg-raised); border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 3px; }
 .plate::before, .plate::after { content: ""; position: absolute; width: 14px; height: 14px; }
 .plate::before { top: -1px; left: -1px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
 .plate::after { bottom: -1px; right: -1px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
 .plate-label { position: absolute; top: -11px; left: 24px; background: var(--bg-raised); padding: 0 8px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
-
 /* top bar */
 .topbar { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--border); padding: 14px 0; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); }
 .topbar .wrap-wide { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.brand { display: flex; align-items: baseline; gap: 8px; font-family: "IBM Plex Mono", monospace; font-size: 13.5px; letter-spacing: 0.04em; color: var(--ink); font-weight: 600; }
+.brand { display: flex; align-items: baseline; gap: 8px; font-family: "IBM Plex Mono", monospace; font-size: 19px; letter-spacing: 0.03em; color: var(--ink); font-weight: 700; }
 .brand .dot { color: var(--accent); }
 .topnav { display: flex; gap: 22px; font-family: "IBM Plex Mono", monospace; font-size: 12.5px; letter-spacing: 0.03em; align-items: center; }
 .topnav a { color: var(--ink-dim); }
 .topnav a:hover { color: var(--accent); }
 .topnav .icon-link { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border-strong); padding: 6px 12px; border-radius: 2px; color: var(--ink); }
 .topnav .icon-link:hover { border-color: var(--accent); color: var(--accent); }
-
 /* hero */
 .hero { padding: 68px 0 30px; }
 .hero-kicker { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
@@ -96,14 +93,12 @@ code, .mono, .num, .tag, .metric-value, .eq { font-family: "IBM Plex Mono", ui-m
 .btn:hover { border-color: var(--accent); color: var(--accent); }
 .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .btn.primary:hover { opacity: .9; color: var(--accent-ink); }
-
 /* quick facts strip */
 .facts { margin-top: 46px; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
 .fact { background: var(--bg-raised); padding: 20px 22px; }
 .fact-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 8px; font-family: "IBM Plex Mono", monospace; }
 .fact-value { font-size: 1rem; color: var(--ink); font-weight: 600; line-height: 1.35; }
 .fact-value span { color: var(--ink-dim); font-weight: 400; display: block; font-size: 13px; margin-top: 2px; }
-
 section { padding: 72px 0; }
 section.tight { padding: 40px 0; }
 .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px; }
@@ -115,7 +110,6 @@ p:last-child { margin-bottom: 0; }
 .prose { max-width: 74ch; color: var(--ink-dim); }
 .prose strong { color: var(--ink); font-weight: 600; }
 hr.rule { border: none; border-top: 1px solid var(--border); margin: 0; }
-
 /* timeline / record rows */
 .record-group { margin-bottom: 30px; }
 .record-group:last-child { margin-bottom: 0; }
@@ -128,7 +122,6 @@ hr.rule { border: none; border-top: 1px solid var(--border); margin: 0; }
 .record ul { margin: 0; padding-left: 18px; color: var(--ink-dim); font-size: 14px; line-height: 1.7; }
 .record ul li::marker { color: var(--accent); }
 @media (max-width: 620px) { .record { grid-template-columns: 1fr; gap: 6px; } }
-
 /* education plates */
 .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 16px; }
 .edu-card { border: 1px solid var(--border); border-left: 3px solid var(--cyan); background: var(--bg-raised); border-radius: 2px; padding: 20px 22px; }
@@ -136,27 +129,23 @@ hr.rule { border: none; border-top: 1px solid var(--border); margin: 0; }
 .edu-card h4 { font-size: 1.02rem; margin-bottom: 3px; font-family: "IBM Plex Sans"; font-weight: 600; }
 .edu-card .degree { font-size: 13.5px; color: var(--cyan); font-style: italic; margin-bottom: 4px; }
 .edu-card .place { font-size: 13px; color: var(--ink-faint); }
-
 /* skills */
 .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
 .skill-cat { background: var(--bg-raised); padding: 20px 22px; }
 .skill-cat-name { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; font-family: "IBM Plex Mono", monospace; }
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { font-family: "IBM Plex Mono", monospace; font-size: 12px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border-strong); color: var(--ink-dim); background: var(--bg-sunken); }
-
 /* awards */
 .award-list { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
 .award-row { background: var(--bg-raised); padding: 16px 22px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: baseline; }
 .award-row h4 { font-size: .98rem; font-weight: 600; font-family: "IBM Plex Sans"; margin-bottom: 3px; }
 .award-row p { margin: 0; font-size: 13px; color: var(--ink-faint); }
 .award-row .yr { font-family: "IBM Plex Mono", monospace; color: var(--accent); font-size: 13px; }
-
 /* filters */
 .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px; }
 .filter-btn { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; padding: 9px 16px; border-radius: 20px; border: 1px solid var(--border-strong); background: transparent; color: var(--ink-dim); cursor: pointer; transition: all .15s ease; }
 .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
 .filter-btn.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-
 /* project cards */
 .proj-list { display: flex; flex-direction: column; gap: 18px; }
 .proj-card { border: 1px solid var(--border); border-radius: 3px; background: var(--bg-raised); overflow: hidden; transition: border-color .15s ease; }
@@ -175,7 +164,6 @@ hr.rule { border: none; border-top: 1px solid var(--border); margin: 0; }
 .proj-tag { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; padding: 4px 10px; border-radius: 20px; background: var(--bg-sunken); border: 1px solid var(--border); color: var(--ink-dim); }
 .proj-toggle { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-family: "IBM Plex Mono", monospace; color: var(--ink-dim); font-size: 15px; transition: all .15s ease; }
 .proj-card[data-active="true"] .proj-toggle { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-
 .proj-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
 .proj-card[data-active="true"] .proj-body { max-height: 4000px; }
 .proj-body-inner { padding: 4px clamp(18px,3vw,30px) 30px; border-top: 1px solid var(--border); margin-top: 2px; }
@@ -183,34 +171,28 @@ hr.rule { border: none; border-top: 1px solid var(--border); margin: 0; }
 @media (max-width: 700px) { .proj-cols { grid-template-columns: 1fr; } }
 .proj-col-h { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px; font-family: "IBM Plex Mono", monospace; }
 .proj-col p { font-size: 14px; color: var(--ink-dim); }
-
 .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 18px 0; padding: 18px; background: var(--bg-sunken); border-radius: 2px; border: 1px solid var(--border); }
 .flow-step { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink); background: var(--bg-raised); border: 1px solid var(--border-strong); padding: 8px 13px; border-radius: 2px; line-height: 1.4; }
 .flow-arrow { color: var(--accent); font-size: 14px; }
-
 .metric-mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; margin: 18px 0; }
 .metric-mini { background: var(--bg-raised); padding: 16px 18px; }
 .metric-mini .v { font-family: "IBM Plex Mono", monospace; font-size: 1.25rem; font-weight: 600; color: var(--accent); line-height: 1.1; }
 .metric-mini .l { font-size: 11.5px; color: var(--ink-faint); margin-top: 6px; line-height: 1.4; }
-
 .proj-media { margin: 18px 0; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; background: var(--bg-sunken); }
 .proj-media video { display: block; width: 100%; height: auto; background: #000; }
 .proj-media-cap { padding: 9px 14px; font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-faint); border-top: 1px solid var(--border); }
-
 /* footer */
 footer { border-top: 1px solid var(--border); padding: 44px 0 60px; }
 footer .wrap-wide { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
 footer .f-links { display: flex; gap: 20px; font-family: "IBM Plex Mono", monospace; font-size: 13px; }
 footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mono", monospace; margin: 0; }
-
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 </style>
 </head>
 <body>
-
 <div class="topbar">
   <div class="wrap-wide">
-    <div class="brand"><span class="dot">&#9679;</span> Chetan&nbsp;Dahal</div>
+    <div class="brand"><span class="dot">&#9679;</span> CHETAN&nbsp;DAHAL</div>
     <nav class="topnav">
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
@@ -219,7 +201,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
     </nav>
   </div>
 </div>
-
 <header class="hero">
   <div class="wrap-wide">
     <h1>Autonomous robots that work outside the lab and the control theory that makes them <span class="accent-word">provably</span> safe to be around.</h1>
@@ -230,7 +211,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
       <a class="btn" href="https://linkedin.com/in/chetandahal" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn" href="https://github.com/chetandahal80" target="_blank" rel="noopener">GitHub</a>
     </div>
-
     <div class="facts">
       <div class="fact"><div class="fact-label">Current role</div><div class="fact-value">Graduate Research Assistant<span>University of Nevada, Las Vegas &middot; Jan 2025&ndash;present</span></div></div>
       <div class="fact"><div class="fact-label">Research focus</div><div class="fact-value">Autonomy, control theory &amp; perception<span>UAV &amp; mobile robot systems, sensor fusion</span></div></div>
@@ -239,7 +219,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
     </div>
   </div>
 </header>
-
 <section id="about">
   <div class="wrap">
     <div class="plate" style="padding: 38px clamp(20px,4vw,44px);">
@@ -251,7 +230,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
     </div>
   </div>
 </section>
-
 <section id="experience">
   <div class="wrap-wide">
     <div class="section-head">
@@ -259,7 +237,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
       <h2>Experience &amp; education</h2>
       <p>Research, teaching and a year and a half running a factory floor before returning to graduate school.</p>
     </div>
-
     <div class="plate" style="padding: 30px clamp(18px,3vw,34px); margin-bottom: 20px;">
       <span class="plate-label">Experience</span>
       <div class="record-group">
@@ -284,7 +261,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div>
       </div>
-
       <div class="record-group">
         <div class="record-group-title">Teaching</div>
         <div class="record">
@@ -307,7 +283,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div>
       </div>
-
       <div class="record-group">
         <div class="record-group-title">Industry</div>
         <div class="record">
@@ -323,7 +298,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
         </div>
       </div>
     </div>
-
     <div class="edu-grid" style="margin-bottom: 20px;">
       <div class="edu-card">
         <div class="when">Jan 2025 &ndash; Dec 2026</div>
@@ -340,7 +314,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
         <div class="place" style="margin-top:6px;">Coursework: control systems, kinematics and dynamics, probability and statistics, C programming</div>
       </div>
     </div>
-
     <div class="skill-grid" style="margin-bottom: 20px;">
       <div class="skill-cat"><div class="skill-cat-name">Programming</div><div class="chip-row"><span class="chip">Python</span><span class="chip">C / C++</span><span class="chip">MATLAB</span><span class="chip">Git</span></div></div>
       <div class="skill-cat"><div class="skill-cat-name">Robotics Middleware</div><div class="chip-row"><span class="chip">ROS 2 (Humble)</span><span class="chip">ROS 1</span><span class="chip">Lifecycle nodes</span><span class="chip">tf2</span><span class="chip">rosbag2</span><span class="chip">CycloneDDS</span><span class="chip">colcon / CMake</span><span class="chip">Gazebo</span><span class="chip">RViz2</span><span class="chip">PX4 SITL</span></div></div>
@@ -349,7 +322,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
       <div class="skill-cat"><div class="skill-cat-name">Hardware &amp; Platforms</div><div class="chip-row"><span class="chip">Jetson Orin Nano</span><span class="chip">Raspberry Pi</span><span class="chip">STM32</span><span class="chip">MSP432</span><span class="chip">Livox LiDAR</span><span class="chip">SBG INS / GNSS</span><span class="chip">RGB-D cameras</span><span class="chip">PX4 / Cube Orange</span><span class="chip">MEMS IMUs</span><span class="chip">UART / RS-232 / I2C / SPI</span></div></div>
       <div class="skill-cat"><div class="skill-cat-name">Design &amp; Simulation Tools</div><div class="chip-row"><span class="chip">SOLIDWORKS</span><span class="chip">AutoCAD</span><span class="chip">ANSYS</span><span class="chip">LTSpice</span><span class="chip">Linux (Ubuntu, ARM64)</span></div></div>
     </div>
-
     <div>
       <div class="eyebrow" style="margin-bottom: 14px;">Selected honors &amp; awards</div>
       <div class="award-list">
@@ -361,7 +333,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
     </div>
   </div>
 </section>
-
 <section id="projects">
   <div class="wrap-wide">
     <div class="section-head">
@@ -369,7 +340,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
       <h2>Projects</h2>
       <p>Ten projects spanning safety-critical control, UAV autonomy, perception and embedded ML. Click any card for the full problem statement, approach and results.</p>
     </div>
-
     <div class="filters" role="group" aria-label="Filter projects by category">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="uav">UAV / Aerial</button>
@@ -378,9 +348,7 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
       <button class="filter-btn" data-filter="perception">Perception</button>
       <button class="filter-btn" data-filter="embedded">Embedded / Edge</button>
     </div>
-
     <div class="proj-list" id="proj-list">
-
       <!-- 01 -->
       <article class="proj-card" data-cat="control" data-active="false">
         <div class="proj-head">
@@ -419,7 +387,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div></div>
       </article>
-
       <!-- 02 -->
       <article class="proj-card" data-cat="control" data-active="false">
         <div class="proj-head">
@@ -462,7 +429,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div></div>
       </article>
-
       <!-- 03 -->
       <article class="proj-card" data-cat="uav" data-active="false">
         <div class="proj-head">
@@ -502,7 +468,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div></div>
       </article>
-
       <!-- 04 -->
       <article class="proj-card" data-cat="uav" data-active="false">
         <div class="proj-head">
@@ -540,7 +505,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div></div>
       </article>
-
       <!-- 05 -->
       <article class="proj-card" data-cat="deep-learning" data-active="false">
         <div class="proj-head">
@@ -580,7 +544,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div></div>
       </article>
-
       <!-- 06 -->
       <article class="proj-card" data-cat="control" data-active="false">
         <div class="proj-head">
@@ -624,7 +587,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div></div>
       </article>
-
       <!-- 07 -->
       <article class="proj-card" data-cat="embedded" data-active="false">
         <div class="proj-head">
@@ -656,7 +618,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div></div>
       </article>
-
       <!-- 08 -->
       <article class="proj-card" data-cat="perception" data-active="false">
         <div class="proj-head">
@@ -685,7 +646,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div></div>
       </article>
-
       <!-- 09 -->
       <article class="proj-card" data-cat="control" data-active="false">
         <div class="proj-head">
@@ -718,7 +678,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div></div>
       </article>
-
       <!-- 10 -->
       <article class="proj-card" data-cat="control" data-active="false">
         <div class="proj-head">
@@ -761,11 +720,9 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
           </div>
         </div></div>
       </article>
-
     </div>
   </div>
 </section>
-
 <footer>
   <div class="wrap-wide">
     <div>
@@ -778,7 +735,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
     </div>
   </div>
 </footer>
-
 <script>
 (function() {
   // accordion
@@ -789,7 +745,6 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
       card.setAttribute('data-active', isActive ? 'false' : 'true');
     });
   });
-
   // filters
   var buttons = document.querySelectorAll('.filter-btn');
   var cards = document.querySelectorAll('.proj-card');
@@ -803,12 +758,10 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
       });
     });
   });
-
   // open project 01 by default
   var first = document.querySelector('.proj-card');
   if (first) first.setAttribute('data-active', 'true');
 })();
 </script>
-
 </body>
 </html>
