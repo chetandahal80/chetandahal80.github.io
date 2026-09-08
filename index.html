@@ -162,6 +162,10 @@ hr.rule { border: none; border-top: 1px solid var(--border); margin: 0; }
 .proj-summary { font-size: 14.5px; color: var(--ink-dim); max-width: 68ch; margin-bottom: 14px; }
 .proj-tags { display: flex; flex-wrap: wrap; gap: 7px; }
 .proj-tag { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; padding: 4px 10px; border-radius: 20px; background: var(--bg-sunken); border: 1px solid var(--border); color: var(--ink-dim); }
+.proj-links { margin-top: 14px; }
+.proj-link { font-family: "IBM Plex Mono", monospace; font-size: 12px; padding: 6px 13px; border-radius: 2px; border: 1px solid var(--border-strong); color: var(--ink); display: inline-flex; align-items: center; gap: 7px; text-decoration: none; transition: border-color .15s ease, color .15s ease; }
+.proj-link:hover { border-color: var(--accent); color: var(--accent); }
+.proj-link svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
 .proj-toggle { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-family: "IBM Plex Mono", monospace; color: var(--ink-dim); font-size: 15px; transition: all .15s ease; }
 .proj-card[data-active="true"] .proj-toggle { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .proj-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
@@ -192,7 +196,7 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
 <body>
 <div class="topbar">
   <div class="wrap-wide">
-    <div class="brand"><span class="dot">&#9679;</span> CHETAN&nbsp;DAHAL</div>
+    <div class="brand"><span class="dot">&#9679;</span> Chetan&nbsp;Dahal</div>
     <nav class="topnav">
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
@@ -396,6 +400,7 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
               <div class="proj-title">CR3BP Spacecraft Control at Earth-Moon L2</div>
               <div class="proj-summary">Stabilising a spacecraft at an unstable Lagrange point under persistent disturbances, comparing pole placement, LQR and NSGA-II multi-objective optimisation to show that how you tune Q/R matters as much as which controller you pick.</div>
               <div class="proj-tags"><span class="proj-tag">MATLAB</span><span class="proj-tag">LQR</span><span class="proj-tag">Pole Placement</span><span class="proj-tag">NSGA-II</span><span class="proj-tag">Pareto Front</span><span class="proj-tag">Servo-Compensator</span><span class="proj-tag">CR3BP</span></div>
+              <div class="proj-links"><a class="proj-link" href="https://github.com/chetandahal80/CR3BP-spacecraft-control" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub</a></div>
             </div>
             <div class="proj-toggle">+</div>
           </div>
@@ -438,6 +443,7 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
               <div class="proj-title">Autonomous UAV for Radiation Mapping in GPS-Denied Environments</div>
               <div class="proj-summary">End-to-end autonomy pipeline for mapping radiation in indoor, GPS-denied spaces using SLAM and ROS.</div>
               <div class="proj-tags"><span class="proj-tag">ROS</span><span class="proj-tag">PX4 SITL</span><span class="proj-tag">Gazebo</span><span class="proj-tag">Hector SLAM</span><span class="proj-tag">A* / DWA Planning</span><span class="proj-tag">RViz</span><span class="proj-tag">Grid Maps</span></div>
+              <div class="proj-links"><a class="proj-link" href="https://github.com/chetandahal80/radiation_mapping_uav" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub</a></div>
             </div>
             <div class="proj-toggle">+</div>
           </div>
@@ -553,6 +559,7 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
               <div class="proj-title">3D Human Tracking: YOLOv8 + Kalman Filter + RGB-D</div>
               <div class="proj-summary">Multi-target 3D human tracking for mobile robot safety, fusing depth camera detection with a Kalman filter and optimal data association.</div>
               <div class="proj-tags"><span class="proj-tag">ROS 2</span><span class="proj-tag">YOLOv8</span><span class="proj-tag">Kalman Filter</span><span class="proj-tag">RGB-D Camera</span><span class="proj-tag">Data Association</span><span class="proj-tag">Python</span></div>
+              <div class="proj-links"><a class="proj-link" href="https://github.com/chetandahal80/Human-Tracking-using-RGBD-camera" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub</a></div>
             </div>
             <div class="proj-toggle">+</div>
           </div>
@@ -627,6 +634,7 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
               <div class="proj-title">Sudoku Solver using OpenCV, CNN and Dancing Links</div>
               <div class="proj-summary">End-to-end vision pipeline that reads a Sudoku puzzle from an image, recognises digits with a CNN and solves it using the Dancing Links algorithm.</div>
               <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">OpenCV</span><span class="proj-tag">CNN</span><span class="proj-tag">Dancing Links (DLX)</span><span class="proj-tag">Image Processing</span></div>
+              <div class="proj-links"><a class="proj-link" href="https://github.com/chetandahal80/Sudoku-solver---Backtracking-CPA-Dancing-Link" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub</a></div>
             </div>
             <div class="proj-toggle">+</div>
           </div>
@@ -655,6 +663,7 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
               <div class="proj-title">Exponential Stabilisation of a Nonholonomic Mobile Robot</div>
               <div class="proj-summary">Simulation study reproducing and validating a nonlinear feedback control law for exponential stabilisation of a two-wheeled mobile robot from arbitrary initial conditions.</div>
               <div class="proj-tags"><span class="proj-tag">MATLAB</span><span class="proj-tag">Nonlinear Control</span><span class="proj-tag">Robot Kinematics</span><span class="proj-tag">Time-Domain Simulation</span></div>
+              <div class="proj-links"><a class="proj-link" href="https://github.com/chetandahal80/Simulation---Exponential-Stabilization-of-nonholonomic-robots" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub</a></div>
             </div>
             <div class="proj-toggle">+</div>
           </div>
@@ -687,6 +696,7 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
               <div class="proj-title">Perimeter-Defense Game: One Attacker vs. One Defender</div>
               <div class="proj-summary">MATLAB simulation of an optimal pursuit-evasion game where an attacker tries to breach a circular perimeter and a defender tries to intercept it, using differential game theory to derive and visualise the winning regions.</div>
               <div class="proj-tags"><span class="proj-tag">MATLAB</span><span class="proj-tag">Differential Game Theory</span><span class="proj-tag">Pursuit-Evasion</span><span class="proj-tag">Optimal Control</span><span class="proj-tag">Game Theory</span></div>
+              <div class="proj-links"><a class="proj-link" href="https://github.com/chetandahal80/Simulation-Two-robots-perimeter-defense-problem" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub</a></div>
             </div>
             <div class="proj-toggle">+</div>
           </div>
@@ -744,6 +754,10 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
       var isActive = card.getAttribute('data-active') === 'true';
       card.setAttribute('data-active', isActive ? 'false' : 'true');
     });
+  });
+  // prevent GitHub links from toggling the accordion
+  document.querySelectorAll('.proj-link').forEach(function(link) {
+    link.addEventListener('click', function(e) { e.stopPropagation(); });
   });
   // filters
   var buttons = document.querySelectorAll('.filter-btn');
