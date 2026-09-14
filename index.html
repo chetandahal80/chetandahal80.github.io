@@ -374,7 +374,7 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
             </div>
             <div class="proj-col"><div class="proj-col-h">My approach</div>
               <p>Developing an MPC-based motion planning pipeline for a wheeled mobile robot, with real-time human state estimation via YOLOv8 detection and Kalman filter tracking feeding directly into the planner's safety layer.</p>
-              <p>Integrating discrete-time Control Barrier Function (DCBF) constraints into the MPC receding horizon formulation, extending formal safety guarantees to dynamic human obstacles using Kalman-predicted trajectories. Implemented and validated in ROS 2 simulation. A DPP-reformulated QP solver now runs the full pipeline at 17&times; real time and a 30-seed statistical sweep plus a deliberately non-straight-line human motion stress test have been used to actively look for and quantify where the safety guarantee is weakest.</p>
+              <p>Built an MPC-based motion planner for a differential-drive mobile robot that integrates discrete-time Control Barrier Function (DCBF) constraints directly into the receding-horizon QP, with a forward-invariance proof extending that guarantee to dynamic human obstacles. The constraint is enforced through a heavily-penalized slack variable, not a soft cost term the planner is merely nudged away from, but a bounded escape valve that only activates when no genuinely safe solution exists, so the solver degrades gracefully in a tight corner case instead of failing outright or silently drifting closer the way a pure heuristic penalty would.</p>
             </div>
           </div>
           <div class="flow">
