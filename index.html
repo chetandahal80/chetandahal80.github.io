@@ -369,12 +369,12 @@ footer p { color: var(--ink-faint); font-size: 12.8px; font-family: "IBM Plex Mo
         <div class="proj-body"><div class="proj-body-inner">
           <div class="proj-cols">
             <div class="proj-col"><div class="proj-col-h">The challenge</div>
-              <p>Most MPC planners enforce safety around moving humans through heuristic, soft-constraint penalties. These give no formal guarantee that the robot will actually avoid collisions; they only discourage close passes through the cost function.</p>
-              <p>The goal: replace those heuristics with Control Barrier Functions (CBFs) that provide mathematically certified collision-avoidance guarantees, a provably stronger alternative, while keeping the planner real-time and smooth enough for shared human-robot environments.</p>
+              <p>Navigating around moving humans requires a robot to anticipate motion, account for uncertain observations and maintain separation while respecting its motion limits. Penalizing proximity in an MPC objective alone does not guarantee safety, while inaccurate predictions can make avoidance unnecessarily conservative or unreliable.</p>
+              <p>The goal: integrate explicit, uncertainty-aware safety constraints into MPC, with a mathematical basis for safety under stated assumptions and practical handling of sensing delays and difficult encounters.</p>
             </div>
             <div class="proj-col"><div class="proj-col-h">My approach</div>
-              <p>Developing an MPC-based motion planning pipeline for a wheeled mobile robot, with real-time human state estimation via YOLOv8 detection and Kalman filter tracking feeding directly into the planner's safety layer.</p>
-              <p>Built an MPC-based motion planner for a differential-drive mobile robot that integrates discrete-time Control Barrier Function (DCBF) constraints directly into the receding-horizon QP, with a forward-invariance proof extending that guarantee to dynamic human obstacles. The constraint is enforced through a heavily-penalized slack variable, not a soft cost term the planner is merely nudged away from, but a bounded escape valve that only activates when no genuinely safe solution exists, so the solver degrades gracefully in a tight corner case instead of failing outright or silently drifting closer the way a pure heuristic penalty would.</p>
+              <p>The planner predicts human motion and covariance across the MPC horizon, enlarging separation regions as position uncertainty increases. Discrete-time Control Barrier Function constraints are incorporated directly into the MPC quadratic program, with a conditional forward-invariance proof under explicit modeling, feasibility and zero-relaxation assumptions.</p>
+              <p>Obstacle-aware route guidance supports navigation around humans, while acceleration constraints limit abrupt velocity changes. The implementation combines heavily penalized safety relaxation with near-term clearance checks, input-freshness watchdogs and stop responses. Performance was evaluated in Gazebo across stationary, crossing, approaching and multiple-human scenarios.</p>
             </div>
           </div>
           <div class="flow">
